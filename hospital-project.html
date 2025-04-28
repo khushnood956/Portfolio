@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System - Project Details</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f8ff;
+            color: #333;
+        }
+
+        header {
+            background-color: #a3a7ff;
+            color: #000;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-bottom: 5px solid rgb(131, 131, 182);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .description {
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+            background-color: lavender;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 3px solid rgb(131, 131, 182);
+        }
+
+        .slider {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 3px solid rgb(131, 131, 182);
+        }
+
+        .slides {
+            display: flex;
+            width: 200%;
+            transition: transform 0.5s ease;
+        }
+
+        .slides img {
+            width: 100%;
+            border-right: 2px solid white;
+        }
+
+        .navigation {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .navigation button {
+            background-color: lavender;
+            border: 2px solid rgb(131, 131, 182);
+            color: black;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .navigation button:hover {
+            background-color: rgb(191, 191, 255);
+            border: white;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .description {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Hospital Management System (Java CLI)</h1>
+</header>
+
+<div class="container">
+
+    <div class="description">
+        <p>
+            This project is a command-line based Hospital Management System built using Java OOP principles. 
+            It allows adding and managing patients, doctors, and departments efficiently with a menu-driven interface.
+            Features include admitting patients, assigning doctors, discharging patients, and organizing departments.
+        </p>
+    </div>
+
+    <div class="slider" id="slider">
+        <div class="slides">
+            <img src="hp03.png" alt="Hospital System Screenshot 1">
+            <img src="hp02.png" alt="Hospital System Screenshot 2">
+            <img src="hp01.png" alt="Hospital System Screenshot 3">
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button onclick="prevSlide()">Previous</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+
+</div>
+
+<script>
+    const slides = document.querySelector('.slides');
+    const totalSlides = document.querySelectorAll('.slides img').length;
+    let index = 0;
+
+    function showSlide(i) {
+        index = (i + totalSlides) % totalSlides;
+        slides.style.transform = `translateX(-${index * 25}%)`;
+    }
+
+    function nextSlide() {
+        showSlide(index + 1);
+    }
+
+    function prevSlide() {
+        showSlide(index - 1);
+    }
+</script>
+
+</body>
+</html>

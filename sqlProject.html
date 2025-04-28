@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL based Schema Design - Project Details</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f8ff;
+            color: #333;
+        }
+
+        header {
+            background-color: #a3a7ff;
+            color: #000;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-bottom: 5px solid rgb(131, 131, 182);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .description {
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+            background-color: lavender;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 3px solid rgb(131, 131, 182);
+        }
+
+        .slider {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 3px solid rgb(131, 131, 182);
+        }
+
+        .slides {
+            display: flex;
+            width: 185%; height: max-content;
+            transition: transform 0.5s ease;
+        }
+
+        .slides img {
+            width: 100%;
+            border-right: 2px solid white;
+        }
+
+        .navigation {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .navigation button {
+            background-color: lavender;
+            border: 2px solid rgb(131, 131, 182);
+            color: black;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .navigation button:hover {
+            background-color: rgb(191, 191, 255);
+            border: white;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .description {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>SQL based Schema Design (SQL DEVELOPER)</h1>
+</header>
+
+<div class="container">
+
+    <div class="description">
+        <p>
+            This project focuses on Database Schema Design using SQL Developer. It involves designing a robust database schema for a fictional application, including entities like USER, PRODUCT, ORDER, and PAYMENT with well-defined relationships. The schema is optimized for data integrity and efficient querying, using primary keys, foreign keys, and indexes. The project also includes SQL queries for managing data and performing complex operations like joins, aggregations, and subqueries, demonstrating a solid understanding of relational databases and SQL best practices.        </p>
+    </div>
+
+    <div class="slider" id="slider">
+        <div class="slides">
+            <img src="sql01.jpg" alt="SQL based Schema Design Screenshot 1">
+            <img src="SQL02.jpg" alt="SQL based Schema Design Screenshot 2">
+            <img src="SQL03.jpg" alt="SQL based Schema Design Screenshot 3">
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button onclick="prevSlide()">Previous</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+
+</div>
+
+<script>
+    const slides = document.querySelector('.slides');
+    const totalSlides = document.querySelectorAll('.slides img').length;
+    let index = 0;
+
+    function showSlide(i) {
+        index = (i + totalSlides) % totalSlides;
+        slides.style.transform = `translateX(-${index * 23}%)`;
+    }
+
+    function nextSlide() {
+        showSlide(index + 1);
+    }
+
+    function prevSlide() {
+        showSlide(index - 1);
+    }
+</script>
+
+</body>
+</html>

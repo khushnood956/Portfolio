@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Projects</title>
+    <style>
+        .nav {
+            position: relative;
+            width: 100%;
+            padding: 1.5rem 10%;
+            background: mediumslateblue;
+            backdrop-filter: blur(90px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            transition: background-color 0.3s, padding 0.3s;
+        }
+        
+        .nav.scrolled {
+            background-color: #ffffff;
+            padding: 1rem 10%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nameNav {
+            font-size: x-large;
+            color: #000000;
+            position: relative;
+        }
+        
+        .nameNav::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, orange, yellow);
+            transition: width 0.4s ease;
+        }
+        
+        .nameNav:hover {
+            transform: scale(1.1);
+            color: #FFA500;
+        }
+        
+        .nameNav:hover::after {
+            width: 100%;
+            color: #FFA500;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #030000;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #007AFF;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f3f3f9;
+            color: #333;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 0;
+           
+        }
+        
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(131, 131, 182, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(131, 131, 182, 0.3);
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .project-content, .project-info {
+            padding: 20px;
+        }
+        
+        .project-content h2, .project-info h3 {
+            margin-top: 0;
+            font-size: 22px;
+            color: #333;
+        }
+        
+        .project-content p, .project-info p {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nameNav">
+            <h1>Khushnood Ahmad</h1>
+        </div>
+        <div class="nav-links">
+            <a href="INDEX1.HTML">Home</a>
+            <a href="projects.html" target="_blank">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+
+    <h1>My Projects</h1>
+    
+    <div class="projects-container">
+        
+        <!-- Project 1 -->
+ 
+
+         
+        <div class="project-card">
+            <div class="project-image"><img src="hp03.png" alt="Hospital Management System"></div>
+            <div class="project-content">
+                <a href="hospital-project.html" target="_blank"><h2>Hospital Management System (Java CLI)</h2></a>
+                <p>Developed a complete hospital management system using Java OOP principles and CLI interface.</p>
+            </div>
+        </div>
+    
+        <!-- Project 2 -->
+        <div class="project-card">
+            <div class="project-image"><img src="in01.png" alt="Inventory Management System"></div>
+            <div class="project-content">
+                <a href="inventory-project.html" target="_blank"><h2>Inventory Management System (C++ Linked List)</h2></a>
+                <p>Built an inventory management system in C++ utilizing custom singly linked list data structures.</p>
+            </div>
+        </div>
+        
+        <!-- Project 3 -->
+        <div class="project-card">
+            <div class="project-image"><img src="kt001.png" alt="Money Manager App"></div>
+            <div class="project-content">
+                <a href="kotlin-projects.html" target="_blank"><h2>Money Manager App (Kotlin)</h2></a>
+                <p>A mobile app for tracking expenses and incomes, developed using Kotlin for Android.</p>
+            </div>
+        </div>
+        
+        <!-- Project 4 -->
+        <div class="project-card">
+            <div class="project-image"><img src="db01.png" alt="DBMS Java"></div>
+            <div class="project-content">
+                <a href="dbmsProject.html" target="_blank"><h2>In-Memory DBMS (Java)</h2></a>
+                <p>Implemented a mini DBMS project using Java, focusing on command parsing and basic database operations.</p>
+            </div>
+        </div>
+        
+        <!-- Project 5 -->
+        <div class="project-card">
+            <div class="project-image"><img src="sql01.jpg" alt="Database Schema Design"></div>
+            <div class="project-content">
+                <a href="sqlProject.html" target="_blank"><h2>Database Schema Design (SQL Developer)</h2></a>
+                <p>Designed normalized database schemas and created ER diagrams using Oracle SQL Developer tool.</p>
+            </div>
+        </div>
+
+        <!-- Project 6: Sudoku Game -->
+        <div class="project-card">
+            <div class="project-image"><img src="sodoku.png" alt="Sudoku Game Screenshot"></div>
+            <div class="project-info">
+                <h3>Sudoku Game</h3>
+                <p>Made a Terminal-Based Sudoku using Python.</p>
+            </div>
+        </div>
+
+        <!-- Project 7: To-do List -->
+        <div class="project-card">
+            <div class="project-image"><img src="todolist.png" alt="To-Do List Screenshot"></div>
+            <div class="project-info">
+                <h3>To-do List</h3>
+                <p>A functional TO-DO-LIST using Java that allows users to add, delete, and mark tasks as completed.</p>
+            </div>
+        </div>
+
+        <!-- Project 8: Banking Management System -->
+        <div class="project-card">
+            <div class="project-image"><img src="banking.png" alt="Banking Management System Screenshot"></div>
+            <div class="project-info">
+                <h3>Banking Management System</h3>
+                <p>A Banking System that creates user accounts, allows users to deposit and withdraw money, and view their account balance.</p>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+<script src="script.js"></script>
+</html>
