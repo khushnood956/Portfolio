@@ -593,10 +593,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 console.log('⚡ Secret developer gateway activated. Redirecting to admin projects panel.');
                 
-                // Add a small terminal notification effect
-                const logMsg = "Developer CMS Gateway requested. Opening admin dashboard... [Ctrl+Shift+P]";
-                appendLogLine(logMsg);
-                
                 // Redirect after a brief visual pause
                 setTimeout(() => {
                     window.location.href = 'admin/index.html';

@@ -226,8 +226,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         saveToCache();
         renderProjectList();
-        clearForm();
-        alert('Project structure saved successfully! Note: To make changes permanent in files, click Export JSON and follow instructions.');
+        
+        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            saveToServer(state.projects, false);
+        } else {
+            clearForm();
+            alert('Project structure saved successfully to browser cache! Note: To make permanent changes in your codebase, click "Export projects.json" and follow instructions.');
+        }
     }
 
     function deleteProject(id) {
@@ -236,6 +241,39 @@ document.addEventListener('DOMContentLoaded', () => {
         renderProjectList();
         if (state.editingProjectId === id) {
             clearForm();
+        }
+        
+        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            saveToServer(state.projects, true);
+        }
+    }
+
+    async function saveToServer(projects, isDelete = false) {
+        try {
+            const response = await fetch('/api/v1/projects', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(projects)
+            });
+            
+            if (response.ok) {
+                if (!isDelete) {
+                    clearForm();
+                    alert('🚀 Permanent sync successful! The project has been automatically written directly to disk (data/projects.json and data/projects.js).');
+                } else {
+                    alert('🚀 Permanent sync successful! The project deletion has been written directly to disk.');
+                }
+            } else {
+                throw new Error('Server responded with an error status: ' + response.status);
+            }
+        } catch (err) {
+            console.error('Failed to sync database files with dev server:', err);
+            if (!isDelete) {
+                clearForm();
+                alert('Project saved to browser cache, but failed to write to disk. Make sure you run `node server.js` in your terminal to enable automatic file syncing.');
+            }
         }
     }
 
