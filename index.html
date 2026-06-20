@@ -3,95 +3,620 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Khushnood Ahmad | Java Backend Developer & Systems Engineer</title>
+    
+    <!-- Meta SEO optimization -->
+    <meta name="description" content="Portfolio of Khushnood Ahmad, a specialized Backend Java Developer focused on Spring Boot APIs, MySQL relational modeling, system architecture, and clean OOP design.">
+    <meta name="keywords" content="Java Developer, Backend Engineer, Spring Boot, REST APIs, MySQL, Database Design, System Architecture, Khushnood Ahmad">
+    <meta name="author" content="Khushnood Ahmad">
+    
+    <!-- Open Graph Metadata -->
+    <meta property="og:title" content="Khushnood Ahmad | Java Backend Developer">
+    <meta property="og:description" content="Specialized in building scalable API servers, microservices, and optimized databases using Java, Spring Boot, and MySQL.">
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="https://khushnood.dev"> <!-- Fallback placeholder -->
+    <meta property="og:image" content="pic.png">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Khushnood Ahmad | Java Backend Developer">
+    <meta name="twitter:description" content="Java Backend Engineer focused on Spring Boot, scalable database schema modeling, and clean architectures.">
+    <meta name="twitter:image" content="pic.png">
+
+    <!-- CSS stylesheet link -->
+    <link rel="stylesheet" href="styles/main.css">
+    
+    <!-- Load fallback local projects data in case of file protocol CORS -->
+    <script src="data/projects.js"></script>
+
+    <!-- Schema.json for Structured Data SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Khushnood Ahmad",
+      "jobTitle": "Backend Java Developer",
+      "description": "Backend Developer focused on Spring Boot APIs, MySQL relational modeling, and clean object-oriented code architecture.",
+      "knowsAbout": ["Java", "Spring Boot", "REST APIs", "MySQL", "MongoDB", "Data Structures", "Algorithms", "System Design"],
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Computer Science Department"
+      }
+    }
+    </script>
 </head>
 <body>
-    <nav class="nav">
-        <div class="nameNav">
-            <h1>Khushnood Ahmad</h1>
-        </div>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="projects.html" target="_blank">Projects</a>
-            <a href="#skills">Skills</a>
-            <a href="#contact">Contact</a>
-        </div>
-        <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+
+    <!-- ==========================================
+         NAVIGATION CONTROL PANEL
+         ========================================== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-brand">
+                <span class="nav-brand-accent">&lt;</span>
+                <span>Khushnood</span>
+                <span class="nav-brand-accent">/&gt;</span>
+            </a>
+            
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation Menu" aria-controls="navMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#learning" class="nav-link">Learning</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
-    <section class="hero" id="home">
-        <div class="parent">
-            <section class="bio fade-in">
-                <h1>Welcome!</h1>
-                <p>I’m a passionate Computer Science student with strong programming skills in Python, Java, C++, and SQL.  
-                Always curious and driven, I love building projects, solving problems, and continuously learning new technologies.  
-                With a growing experience in software development, databases, and web technologies, I'm excited to make a meaningful impact in the tech world!</p>
-            </section>
-            <div class="image-container">
-                <img src="pic.png" alt="Khushnood Ahmad's profile picture" class="profile">
+    <!-- ==========================================
+         HERO SECTION: DEVELOPER SYSTEM MONITOR
+         ========================================== -->
+    <!-- ==========================================
+         HERO SECTION: API EXPLORER & PROFILE
+         ========================================== -->
+    <header class="hero" id="home">
+        <div class="section-container">
+            <div class="hero-grid">
+                <!-- Main introduction -->
+                <div class="hero-main">
+                    <div class="hero-pretitle">
+                        <span>Java Backend Developer</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Hi, I'm <span class="grad-accent">Khushnood Ahmad</span>
+                    </h1>
+                    <p class="hero-tagline">
+                        I design and build high-performance backend systems, scalable REST APIs, and clean relational databases that power seamless digital products.
+                    </p>
+                    <div class="hero-ctas">
+                        <a href="#projects" class="btn btn-primary">View Projects</a>
+                        <a href="#contact" class="btn btn-secondary">Contact Me</a>
+                    </div>
+                </div>
+
+                <!-- API Explorer Panel -->
+                <div class="hero-dashboard dashboard-panel api-explorer-card">
+                    <div class="panel-header">
+                        <div class="panel-controls">
+                            <span class="panel-dot red"></span>
+                            <span class="panel-dot yellow"></span>
+                            <span class="panel-dot green"></span>
+                        </div>
+                        <span class="panel-title">api_explorer.http</span>
+                    </div>
+                    
+                    <div class="explorer-body">
+                        <!-- Sidebar for Routes -->
+                        <div class="explorer-routes">
+                            <div class="explorer-section-lbl">Endpoints</div>
+                            <button class="route-btn active" data-route="profile">
+                                <span class="route-method get">GET</span>
+                                <span class="route-path">/profile</span>
+                            </button>
+                            <button class="route-btn" data-route="skills">
+                                <span class="route-method get">GET</span>
+                                <span class="route-path">/skills</span>
+                            </button>
+                            <button class="route-btn" data-route="philosophy">
+                                <span class="route-method get">GET</span>
+                                <span class="route-path">/philosophy</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Request/Response Console -->
+                        <div class="explorer-console">
+                            <div class="api-address-bar" style="border: none; padding: 0.5rem 0; background-color: transparent;">
+                                <span class="api-method" style="padding: 0.2rem 0.5rem; font-size: 0.7rem;">GET</span>
+                                <span class="api-url" id="explorerUrl" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">https://api.khushnood.dev/v1/profile</span>
+                            </div>
+                            
+                            <!-- Trace map showing flow -->
+                            <div class="request-trace">
+                                <span class="trace-step completed">Client</span>
+                                <span class="trace-arrow">→</span>
+                                <span class="trace-step completed">Router</span>
+                                <span class="trace-arrow">→</span>
+                                <span class="trace-step completed">Spring Boot</span>
+                                <span class="trace-arrow">→</span>
+                                <span class="trace-step completed" id="traceDbStep">MySQL</span>
+                            </div>
+                            
+                            <div class="console-response">
+                                <div class="console-response-header">
+                                    <span>Response Body (JSON)</span>
+                                    <span class="response-status">200 OK</span>
+                                </div>
+                                <pre class="console-json" id="explorerResponse">{
+  "name": "Khushnood Ahmad",
+  "role": "Java Backend Developer",
+  "focus": [
+    "REST APIs",
+    "Database Normalization (3NF)",
+    "Clean System Architecture"
+  ]
+}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <a href="#contact" class="cta-button">Get in Touch</a>
+    </header>
+
+    <!-- ==========================================
+         ABOUT SECTION: DEVELOPMENT NARRATIVE
+         ========================================== -->
+    <section class="about" id="about">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-mono">01.</span>
+                    <span>About Me</span>
+                </h2>
+                <span class="section-subtitle">Developer Profile</span>
+            </div>
+
+            <div class="about-grid">
+                <!-- Textual narrative -->
+                <div class="about-story">
+                    <h3>Engineering Philosophy</h3>
+                    <p>
+                        I am a Computer Science student and Java Backend Developer dedicated to building robust, high-performance systems. My passion lies in writing clean, well-tested code, designing optimized relational database schemas, and modeling scalable system architectures.
+                    </p>
+                    <p>
+                        Instead of designing visual user interfaces, I focus on the logical core of applications: ensuring data integrity, structuring clear endpoints, and writing optimized logic paths. I align closely with SOLID object-oriented design principles, ensuring codebases are modular and maintainable.
+                    </p>
+                    
+                    <div class="about-stats-grid">
+                        <div class="about-stat-card">
+                            <div class="about-stat-num">4+</div>
+                            <div class="about-stat-lbl">Core Languages</div>
+                        </div>
+                        <div class="about-stat-card">
+                            <div class="about-stat-num">8+</div>
+                            <div class="about-stat-lbl">Featured Projects</div>
+                        </div>
+                        <div class="about-stat-card">
+                            <div class="about-stat-num">3NF</div>
+                            <div class="about-stat-lbl">Database Form</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IDE Java editor presentation -->
+                <div class="about-ide-panel dashboard-panel">
+                    <div class="panel-header">
+                        <div class="panel-controls">
+                            <span class="panel-dot red"></span>
+                            <span class="panel-dot yellow"></span>
+                            <span class="panel-dot green"></span>
+                        </div>
+                        <span class="panel-title">IntelliJ IDEA - DeveloperProfile.java</span>
+                    </div>
+                    <div class="ide-tabs">
+                        <div class="ide-tab active">
+                            <span class="ide-tab-icon">☕</span>
+                            <span>DeveloperProfile.java</span>
+                        </div>
+                    </div>
+                    <div class="ide-code-block">
+                        <div class="code-line"><span class="line-num">1</span><span class="line-content"><span style="color: #f472b6;">package</span> dev.khushnood;</span></div>
+                        <div class="code-line"><span class="line-num">2</span><span class="line-content"></span></div>
+                        <div class="code-line"><span class="line-num">3</span><span class="line-content"><span style="color: #38bdf8;">public class</span> <span style="color: #fbbf24;">DeveloperProfile</span> {</span></div>
+                        <div class="code-line"><span class="line-num">4</span><span class="line-content">    <span style="color: #38bdf8;">private final</span> String focus = <span style="color: #34d399;">"Backend Systems"</span>;</span></div>
+                        <div class="code-line"><span class="line-num">5</span><span class="line-content">    <span style="color: #38bdf8;">private final</span> String coreFramework = <span style="color: #34d399;">"Spring Boot"</span>;</span></div>
+                        <div class="code-line"><span class="line-num">6</span><span class="line-content">    <span style="color: #38bdf8;">private</span> boolean valuesPerformance = <span style="color: #f472b6;">true</span>;</span></div>
+                        <div class="code-line"><span class="line-num">7</span><span class="line-content"></span></div>
+                        <div class="code-line"><span class="line-num">8</span><span class="line-content">    <span style="color: #38bdf8;">public void</span> <span style="color: #a78bfa;">evaluateMindset</span>() {</span></div>
+                        <div class="code-line"><span class="line-num">9</span><span class="line-content">        <span style="color: #6b7280;">// "I focus on optimization & maintainability"</span></span></div>
+                        <div class="code-line"><span class="line-num">10</span><span class="line-content">        <span style="color: #f472b6;">while</span> (valuesPerformance) {</span></div>
+                        <div class="code-line"><span class="line-num">11</span><span class="line-content">            optimizeCodebaseComplexity();</span></div>
+                        <div class="code-line"><span class="line-num">12</span><span class="line-content">            normalizeDatabaseSchema();</span></div>
+                        <div class="code-line"><span class="line-num">13</span><span class="line-content">            integrateRobustTests();</span></div>
+                        <div class="code-line"><span class="line-num">14</span><span class="line-content">        }</span></div>
+                        <div class="code-line"><span class="line-num">15</span><span class="line-content">    }</span></div>
+                        <div class="code-line"><span class="line-num">16</span><span class="line-content">}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
+    <!-- ==========================================
+         TECHNICAL SKILLS & ERD VISUALIZER
+         ========================================== -->
+    <section class="expertise" id="skills">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-mono">02.</span>
+                    <span>Technical Skills</span>
+                </h2>
+                <span class="section-subtitle">Interactive Database Schema</span>
+            </div>
+
+            <div class="expertise-layout">
+                <!-- Textual capabilities and selector buttons -->
+                <div class="expertise-details">
+                    <h3>Core Technical Stack</h3>
+                    <p>
+                        My skills are organized around the backend software stack. Select a table node in the relational schema or use the tabs below to inspect specific technologies and capabilities.
+                    </p>
+
+                    <div class="erd-tech-stack-selector">
+                        <button class="tech-select-btn active" data-cat="backend">Backend Core</button>
+                        <button class="tech-select-btn" data-cat="databases">Databases</button>
+                        <button class="tech-select-btn" data-cat="programming">Languages</button>
+                        <button class="tech-select-btn" data-cat="tools">Workflow Tools</button>
+                        <button class="tech-select-btn" data-cat="concepts">System Design</button>
+                    </div>
+
+                    <!-- Dynamically populated details card based on selection -->
+                    <div class="expertise-content-panel" id="expertisePanel">
+                        <h4 class="expertise-content-title" id="expertiseTitle">Java & Spring Boot Core Ecosystem</h4>
+                        <p id="expertiseDesc">
+                            Expertise in designing scalable web services, enterprise REST APIs, handling data models, managing configuration properties, and writing production-ready test suites.
+                        </p>
+                        <div class="expertise-tags" id="expertiseTags">
+                            <!-- Badges injected here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Database Relationship Diagram (ERD) -->
+                <div class="erd-panel dashboard-panel">
+                    <div class="panel-header" style="margin-bottom: 1.5rem;">
+                        <span class="panel-title">schema_visualizer.db</span>
+                    </div>
+
+                    <div class="erd-container">
+                        <!-- Table 1: Backend -->
+                        <div class="erd-table active-relation" data-table="backend" style="cursor: pointer;">
+                            <div class="erd-table-header">
+                                <span>TBL_BACKEND</span>
+                                <span style="color: var(--success); font-size: 0.65em;">[FK_REF]</span>
+                            </div>
+                            <div class="erd-table-rows">
+                                <div class="erd-row pk"><span>id</span> <span class="erd-type">BIGINT [PK]</span></div>
+                                <div class="erd-row"><span>java_runtime</span> <span class="erd-type">JVM_17</span></div>
+                                <div class="erd-row"><span>spring_boot</span> <span class="erd-type">MVC_REST</span></div>
+                                <div class="erd-row"><span>maven_builder</span> <span class="erd-type">DEP_MGR</span></div>
+                                <div class="erd-row fk"><span>db_id</span> <span class="erd-type">BIGINT [FK]</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Table 2: Databases -->
+                        <div class="erd-table" data-table="databases" style="cursor: pointer;">
+                            <div class="erd-table-header">
+                                <span>TBL_DATABASES</span>
+                            </div>
+                            <div class="erd-table-rows">
+                                <div class="erd-row pk"><span>db_id</span> <span class="erd-type">BIGINT [PK]</span></div>
+                                <div class="erd-row"><span>relational_db</span> <span class="erd-type">MYSQL</span></div>
+                                <div class="erd-row"><span>nosql_db</span> <span class="erd-type">MONGODB</span></div>
+                                <div class="erd-row"><span>schema_form</span> <span class="erd-type">3NF</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Table 3: Programming -->
+                        <div class="erd-table" data-table="programming" style="cursor: pointer;">
+                            <div class="erd-table-header">
+                                <span>TBL_LANGUAGES</span>
+                            </div>
+                            <div class="erd-table-rows">
+                                <div class="erd-row pk"><span>lang_id</span> <span class="erd-type">INT [PK]</span></div>
+                                <div class="erd-row"><span>main_lang</span> <span class="erd-type">JAVA</span></div>
+                                <div class="erd-row"><span>low_level</span> <span class="erd-type">C++</span></div>
+                                <div class="erd-row"><span>scripts</span> <span class="erd-type">PYTHON_JS</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Table 4: Tools -->
+                        <div class="erd-table" data-table="tools" style="cursor: pointer;">
+                            <div class="erd-table-header">
+                                <span>TBL_TOOLS</span>
+                            </div>
+                            <div class="erd-table-rows">
+                                <div class="erd-row pk"><span>tool_id</span> <span class="erd-type">INT [PK]</span></div>
+                                <div class="erd-row"><span>vcs</span> <span class="erd-type">GIT_GITHUB</span></div>
+                                <div class="erd-row"><span>editor</span> <span class="erd-type">INTELLIJ</span></div>
+                                <div class="erd-row"><span>api_test</span> <span class="erd-type">POSTMAN</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FEATURED PROJECTS: CASE STUDY GRID
+         ========================================== -->
     <section class="projects" id="projects">
-        <h2 class="section-title fade-in">Featured Projects</h2>
-        <div class="project-grid">
-            <div class="project-card fade-in">
-                <div class="project-image"><img src="sodoku.png" alt="Sudoku Game Screenshot"></div>
-                <div class="project-info">
-                    <h3>Sudoku Game</h3>
-                    <p>Made a Terminal-Based Sudoku using Python.</p>
-                </div>
-            </div>
-            <div class="project-card fade-in">
-                <div class="project-image"><img src="todolist.png" alt="To-Do List Screenshot"></div>
-                <div class="project-info">
-                    <h3>To-do List</h3>
-                    <p>A functional TO-DO-LIST using Java that allows users to add, delete, and mark tasks as completed.</p>
-                </div>
-            </div>
-            <div class="project-card fade-in">
-                <div class="project-image"><img src="banking.png" alt="Banking Management System Screenshot"></div>
-                <div class="project-info">
-                    <h3>Banking Management System</h3>
-                    <p>A Banking System that creates user accounts, allows users to deposit and withdraw money, and view their account balance.</p>
-                </div>
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-mono">03.</span>
+                    <span>Featured Projects</span>
+                </h2>
+                <span class="section-subtitle">Selected Engineering Works</span>
             </div>
 
+            <!-- Categories filter -->
+            <div class="projects-filter-bar">
+                <button class="filter-btn active" data-filter="All">All Projects</button>
+                <button class="filter-btn" data-filter="Backend">Backend Services</button>
+                <button class="filter-btn" data-filter="Databases">Databases</button>
+                <button class="filter-btn" data-filter="Programming">Algorithms & CLI</button>
             </div>
-        </div>
-        <a href="projects.html" class="show-more-button" target="_blank">Show More Projects</a>
-    </section>
 
-    <section class="skills" id="skills">
-        <h2 class="section-title fade-in">Skills & Expertise</h2>
-        <div class="skill-list">
-            <div class="skill-tag">Web Development</div>
-            <div class="skill-tag">Java</div>
-            <div class="skill-tag">Adobe Illustrator</div>
-            <div class="skill-tag">Adobe Photoshop</div>
-            <div class="skill-tag">Python</div>
-            <div class="skill-tag">Canva</div>
+            <!-- Main grid containing cards -->
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Dynamically compiled by scripts/main.js -->
+            </div>
         </div>
     </section>
 
+    <!-- ==========================================
+         CURRENTLY LEARNING: CI/CD PIPELINE
+         ========================================== -->
+    <section class="roadmap-section" id="learning">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-mono">04.</span>
+                    <span>Currently Learning</span>
+                </h2>
+                <span class="section-subtitle">CI/CD Learning Pipeline</span>
+            </div>
+
+            <div class="pipeline-flow">
+                <!-- Stage 1 -->
+                <div class="pipeline-stage passed">
+                    <div class="stage-status-icon">✓</div>
+                    <div class="stage-content">
+                        <div class="stage-label">Stage 01: Core Stack</div>
+                        <h4 class="stage-title">Java & Spring Boot APIs</h4>
+                        <p class="stage-desc">Core MVC frameworks, relational schema normalization, query design, unit tests. (Completed & Verified)</p>
+                    </div>
+                </div>
+
+                <!-- Stage 2 -->
+                <div class="pipeline-stage active">
+                    <div class="stage-status-icon">⚡</div>
+                    <div class="stage-content">
+                        <div class="stage-label">Stage 02: Authentication [Active]</div>
+                        <h4 class="stage-title">Spring Security & JWT</h4>
+                        <p class="stage-desc">Implementing stateless authentication filters, authorization managers, password encoding, and JSON Web Tokens.</p>
+                    </div>
+                </div>
+
+                <!-- Stage 3 -->
+                <div class="pipeline-stage queued">
+                    <div class="stage-status-icon">•</div>
+                    <div class="stage-content">
+                        <div class="stage-label">Stage 03: Containers [Queued]</div>
+                        <h4 class="stage-title">Docker & DevOps Basics</h4>
+                        <p class="stage-desc">Containerizing Spring services, writing multi-stage Dockerfiles, and establishing multi-container environments via Docker Compose.</p>
+                    </div>
+                </div>
+
+                <!-- Stage 4 -->
+                <div class="pipeline-stage queued">
+                    <div class="stage-status-icon">•</div>
+                    <div class="stage-content">
+                        <div class="stage-label">Stage 04: Scaling [Queued]</div>
+                        <h4 class="stage-title">Microservices Architecture</h4>
+                        <p class="stage-desc">Decoupled services distributions, API Gateway routing, service registries (Eureka Server), and circuit breakers patterns.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         CONTACT SECTION: LIVE PAYLOAD EXPLORER
+         ========================================== -->
     <section class="contact" id="contact">
-        <h2 class="section-title fade-in">Let's Connect</h2>
-        <p>Interested! Contact me ASAP. Waiting for your response.</p>
-        <p><b>Contact:</b> +923101509147</p>
-        <p><b>E-mail:</b> khushnoodahmed956@gmail.com</p>
-        <div class="social-links">
-            <a href="https://wa.me/+923101509147" class="social-link" aria-label="WhatsApp">WA</a>
-            <a href="https://www.instagram.com/khushnood__ahmed" class="social-link" aria-label="Instagram">IG</a>
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-mono">05.</span>
+                    <span>Contact Me</span>
+                </h2>
+                <span class="section-subtitle">Get in Touch</span>
+            </div>
+
+            <div class="contact-grid">
+                <!-- Column 1: Clean Form Inputs -->
+                <form id="contactForm" class="contact-form">
+                    <div class="form-group">
+                        <label for="contactName" class="form-label">Your Name</label>
+                        <input type="text" id="contactName" class="form-input" placeholder="John Doe" required autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail" class="form-label">Email Address</label>
+                        <input type="email" id="contactEmail" class="form-input" placeholder="recruiter@company.com" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage" class="form-label">Message</label>
+                        <textarea id="contactMessage" class="form-input form-textarea" placeholder="Hi Khushnood, I inspected your backend system portfolio..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <span>Send Message</span>
+                        <span>⚡</span>
+                    </button>
+                </form>
+
+                <!-- Column 2: JSON Payload Preview -->
+                <div class="api-client payload-preview-panel">
+                    <div class="panel-header">
+                        <div class="panel-controls">
+                            <span class="panel-dot red"></span>
+                            <span class="panel-dot yellow"></span>
+                            <span class="panel-dot green"></span>
+                        </div>
+                        <span class="panel-title">payload_preview.json</span>
+                    </div>
+                    <div class="api-body" style="padding: 1.25rem;">
+                        <pre class="console-json" id="payloadPreview" style="min-height: 180px; margin: 0;">{
+  "name": "",
+  "email": "",
+  "message": ""
+}</pre>
+                    </div>
+                    
+                    <!-- Response panel -->
+                    <div class="api-response-panel" id="apiResponsePanel">
+                        <div class="api-response-header">
+                            <div>
+                                <span>Status: </span>
+                                <span id="apiResponseStatus" class="api-status-code">200 OK</span>
+                            </div>
+                            <div>
+                                <span>Time: </span>
+                                <span id="apiResponseTime">42ms</span>
+                            </div>
+                        </div>
+                        <pre class="api-response-body" id="apiResponseText"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direct fallbacks -->
+            <div class="contact-fallbacks">
+                <span class="fallback-lbl">Direct Channels:</span>
+                <div class="fallback-links">
+                    <a href="mailto:khushnoodahmed956@gmail.com" class="btn btn-secondary">Email</a>
+                    <a href="https://www.linkedin.com/in/khushnood-ahmad-03a1192b0/" target="_blank" rel="noopener" class="btn btn-secondary">LinkedIn</a>
+                    <a href="https://github.com/khushnood956" target="_blank" rel="noopener" class="btn btn-secondary">GitHub</a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <!-- ==========================================
+         DYNAMIC SLIDE-OUT CASE STUDY DRAWER
+         ========================================== -->
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <div class="project-drawer" id="projectDrawer" role="dialog" aria-modal="true" aria-labelledby="drTitle">
+        <!-- Header -->
+        <div class="drawer-header">
+            <div class="drawer-header-left">
+                <span class="drawer-category" id="drCategory">Backend Service</span>
+                <h3 class="drawer-title" id="drTitle">Project Title</h3>
+            </div>
+            <button class="drawer-close" id="drawerClose" aria-label="Close case study">&times;</button>
+        </div>
+
+        <!-- Scrollable details content -->
+        <div class="drawer-content">
+            <!-- Gallery showcase -->
+            <div class="drawer-gallery">
+                <div class="drawer-slides" id="drSlides">
+                    <!-- Injected screenshots -->
+                </div>
+                <div class="drawer-gallery-nav" id="drDots">
+                    <!-- Slides indicators -->
+                </div>
+            </div>
+
+            <!-- Overview -->
+            <div class="drawer-section">
+                <h4 class="drawer-section-title">Overview</h4>
+                <p id="drOverview">Project overview description.</p>
+            </div>
+
+            <!-- Technical details -->
+            <div class="drawer-section">
+                <h4 class="drawer-section-title">The Engineering Challenge</h4>
+                <p id="drProblem">Problem parameters details.</p>
+            </div>
+
+            <div class="drawer-section">
+                <h4 class="drawer-section-title">Relational & Code Architecture</h4>
+                <p id="drArchitecture">Design patterns and structural architectures detailed.</p>
+            </div>
+
+            <div class="drawer-section">
+                <h4 class="drawer-section-title">Key Implementation Challenges</h4>
+                <p id="drChallenges">Logical constraints and debugging details.</p>
+            </div>
+
+            <div class="drawer-section">
+                <h4 class="drawer-section-title">Technical Learnings & Outcomes</h4>
+                <p id="drLearnings">Insights into collection scaling and optimization.</p>
+            </div>
+
+            <div class="drawer-section">
+                <h4 class="drawer-section-title">Future Upgrades</h4>
+                <p id="drFuture">Spring Security configuration upgrades...</p>
+            </div>
+
+            <!-- Tech badges -->
+            <div class="drawer-section">
+                <h4 class="drawer-section-title">System Stack</h4>
+                <div class="drawer-tech-grid" id="drTech">
+                    <!-- Badges -->
+                </div>
+            </div>
+
+            <!-- Footer links -->
+            <div class="drawer-actions">
+                <a href="#" target="_blank" rel="noopener" class="btn btn-primary" id="drGithub">
+                    <span>Inspect Code (GitHub)</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MAIN FOOTER
+         ========================================== -->
+    <footer class="footer">
+        <div class="section-container">
+            <div class="footer-grid">
+                <div class="footer-copy">
+                    <p>&copy; 2026 Khushnood Ahmad. Crafted with <span class="heart">♥</span> & a passion for backend systems.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="mailto:khushnoodahmed956@gmail.com" class="footer-link">Email</a>
+                    <a href="https://www.linkedin.com/in/khushnood-ahmad-03a1192b0/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+                    <a href="https://github.com/khushnood956" target="_blank" rel="noopener" class="footer-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Engine initialization script -->
+    <script src="scripts/main.js"></script>
 </body>
 </html>

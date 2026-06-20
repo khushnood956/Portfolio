@@ -1,0 +1,610 @@
+// ==========================================================================
+// CORE PORTFOLIO ENGINE (scripts/main.js)
+// ==========================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    // State Manager
+    const state = {
+        projects: [],
+        activeProject: null,
+        activeImageIndex: 0,
+        activeCategory: 'All',
+        isNavOpen: false
+    };
+
+    // DOM Elements Cache
+    const el = {
+        projectsGrid: document.getElementById('projectsGrid'),
+        filterButtons: document.querySelectorAll('.filter-btn'),
+        drawer: document.getElementById('projectDrawer'),
+        drawerBackdrop: document.getElementById('drawerBackdrop'),
+        drawerClose: document.getElementById('drawerClose'),
+        // API Explorer (Hero)
+        routeBtns: document.querySelectorAll('.route-btn'),
+        explorerUrl: document.getElementById('explorerUrl'),
+        explorerResponse: document.getElementById('explorerResponse'),
+        traceDbStep: document.getElementById('traceDbStep'),
+        // Contact Form
+        contactForm: document.getElementById('contactForm'),
+        contactName: document.getElementById('contactName'),
+        contactEmail: document.getElementById('contactEmail'),
+        contactMessage: document.getElementById('contactMessage'),
+        payloadPreview: document.getElementById('payloadPreview'),
+        apiResponsePanel: document.getElementById('apiResponsePanel'),
+        apiResponseText: document.getElementById('apiResponseText'),
+        apiResponseStatus: document.getElementById('apiResponseStatus'),
+        apiResponseTime: document.getElementById('apiResponseTime'),
+        // ERD Selector
+        techSelectBtns: document.querySelectorAll('.tech-select-btn'),
+        erdTables: document.querySelectorAll('.erd-table'),
+        expertiseTitle: document.getElementById('expertiseTitle'),
+        expertiseDesc: document.getElementById('expertiseDesc'),
+        expertiseTags: document.getElementById('expertiseTags'),
+        // Navigation
+        navbar: document.querySelector('.navbar'),
+        mobileToggle: document.getElementById('mobileToggle'),
+        navMenu: document.getElementById('navMenu'),
+        navLinks: document.querySelectorAll('.nav-link')
+    };
+
+    // ==========================================================================
+    // INITIALIZATION & DATA LOADING
+    // ==========================================================================
+    async function init() {
+        await loadProjectsData();
+        setupNavigation();
+        setupProjectFilters();
+        setupProjectDrawer();
+        setupApiExplorer();
+        setupContactForm();
+        setupErdInteractivity();
+        setupKeyboardShortcuts();
+    }
+
+    async function loadProjectsData() {
+        // First check localStorage for live preview of local CMS edits
+        const cachedProjects = localStorage.getItem('khushnood_portfolio_projects');
+        if (cachedProjects) {
+            state.projects = JSON.parse(cachedProjects);
+            console.log('✅ Projects loaded from local CMS cache.');
+            renderProjects();
+            return;
+        }
+
+        try {
+            // Attempt to fetch central JSON data
+            const response = await fetch('data/projects.json');
+            if (!response.ok) throw new Error('Network response not OK');
+            state.projects = await response.json();
+            console.log('✅ Projects loaded via JSON fetch.');
+        } catch (error) {
+            console.warn('⚠️ JSON fetch failed (likely local file:// CORS). Falling back to window.projectsData.');
+            if (window.projectsData) {
+                state.projects = window.projectsData;
+                console.log('✅ Projects loaded from fallback local JS script.');
+            } else {
+                console.error('❌ No fallback project data found.');
+                state.projects = [];
+            }
+        }
+        
+        // Render projects grid
+        renderProjects();
+    }
+
+    // ==========================================================================
+    // NAVIGATION & LAYOUT
+    // ==========================================================================
+    function setupNavigation() {
+        // Sticky header styling on scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) {
+                el.navbar.classList.add('scrolled');
+            } else {
+                el.navbar.classList.remove('scrolled');
+            }
+            highlightActiveLink();
+        });
+
+        // Mobile Nav Drawer Toggle
+        if (el.mobileToggle && el.navMenu) {
+            el.mobileToggle.addEventListener('click', () => {
+                state.isNavOpen = !state.isNavOpen;
+                el.mobileToggle.classList.toggle('active', state.isNavOpen);
+                el.navMenu.classList.toggle('active', state.isNavOpen);
+            });
+        }
+
+        // Close Mobile Menu on Click
+        el.navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (state.isNavOpen) {
+                    state.isNavOpen = false;
+                    el.mobileToggle.classList.remove('active');
+                    el.navMenu.classList.remove('active');
+                }
+            });
+        });
+    }
+
+    function highlightActiveLink() {
+        const sections = document.querySelectorAll('section[id]');
+        let currentSectionId = '';
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 120;
+            const sectionHeight = section.offsetHeight;
+            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                currentSectionId = section.getAttribute('id');
+            }
+        });
+
+        el.navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSectionId}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // ==========================================================================
+    // PROJECTS RENDER & FILTERING
+    // ==========================================================================
+    function setupProjectFilters() {
+        el.filterButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                el.filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.activeCategory = btn.getAttribute('data-filter');
+                renderProjects();
+            });
+        });
+    }
+
+    function renderProjects() {
+        if (!el.projectsGrid) return;
+
+        const filtered = state.projects.filter(project => {
+            if (state.activeCategory === 'All') return true;
+            if (state.activeCategory === 'Backend' && 
+                (project.category === 'Backend Core' || project.category === 'Systems Engineering')) return true;
+            if (state.activeCategory === 'Databases' && project.category === 'Databases') return true;
+            if (state.activeCategory === 'Programming' && project.category === 'Programming Core') return true;
+            return false;
+        });
+
+        if (filtered.length === 0) {
+            el.projectsGrid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted); font-family: var(--font-mono);">
+                    [INFO] No systems found matching filter.
+                </div>
+            `;
+            return;
+        }
+
+        el.projectsGrid.innerHTML = filtered.map(p => `
+            <div class="project-card" data-id="${p.id}">
+                <div class="project-card-image">
+                    <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='pic.png'">
+                    <span class="project-card-category badge badge-accent">${p.category}</span>
+                </div>
+                <div class="project-card-info">
+                    <h3 class="project-card-title">${p.title}</h3>
+                    <p class="project-card-tagline">${p.tagline}</p>
+                    <div class="project-card-tags">
+                        ${p.techStack.slice(0, 3).map(t => `<span class="project-card-tag">${t}</span>`).join('')}
+                        ${p.techStack.length > 3 ? `<span class="project-card-tag">+${p.techStack.length - 3}</span>` : ''}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // Attach click listeners to cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const id = parseInt(card.getAttribute('data-id'));
+                const project = state.projects.find(p => p.id === id);
+                if (project) openProjectDetail(project);
+            });
+        });
+    }
+
+    // ==========================================================================
+    // CASE STUDY SLIDEOUT DRAWER
+    // ==========================================================================
+    function setupProjectDrawer() {
+        el.drawerClose.addEventListener('click', closeProjectDrawer);
+        el.drawerBackdrop.addEventListener('click', closeProjectDrawer);
+        
+        // Escape key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeProjectDrawer();
+        });
+    }
+
+    function openProjectDetail(project) {
+        state.activeProject = project;
+        state.activeImageIndex = 0;
+
+        // Populate Drawer Details
+        document.getElementById('drCategory').textContent = project.category;
+        document.getElementById('drTitle').textContent = project.title;
+        document.getElementById('drOverview').textContent = project.description;
+        document.getElementById('drProblem').textContent = project.problem || "No description provided.";
+        document.getElementById('drArchitecture').textContent = project.architecture || "In-memory structures built with SOLID principles.";
+        document.getElementById('drChallenges').textContent = project.challenges || "No challenge details provided.";
+        document.getElementById('drLearnings').textContent = project.learnings || "No learning outcomes logged.";
+        
+        // Render tech tags
+        const techContainer = document.getElementById('drTech');
+        techContainer.innerHTML = project.techStack.map(t => `<span class="expertise-tag">${t}</span>`).join('');
+
+        // Link buttons
+        const githubBtn = document.getElementById('drGithub');
+        if (project.github && project.github !== '#') {
+            githubBtn.href = project.github;
+            githubBtn.style.display = 'inline-flex';
+        } else {
+            githubBtn.style.display = 'none';
+        }
+
+        // Render Slideshow
+        renderSlideshow(project.images || [project.image]);
+
+        // Show Drawer
+        el.drawerBackdrop.classList.add('open');
+        el.drawer.classList.add('open');
+        document.body.style.overflow = 'hidden'; // Lock background scroll
+    }
+
+    function closeProjectDrawer() {
+        el.drawerBackdrop.classList.remove('open');
+        el.drawer.classList.remove('open');
+        document.body.style.overflow = '';
+        state.activeProject = null;
+    }
+
+    function renderSlideshow(images) {
+        const slidesContainer = document.getElementById('drSlides');
+        const dotsContainer = document.getElementById('drDots');
+
+        if (!slidesContainer) return;
+
+        slidesContainer.innerHTML = images.map(img => `
+            <img class="drawer-slide-img" src="${img}" alt="Screenshot" onerror="this.src='pic.png'">
+        `).join('');
+
+        if (images.length <= 1) {
+            dotsContainer.innerHTML = '';
+            slidesContainer.style.transform = 'translateX(0)';
+            return;
+        }
+
+        // Dots indicator
+        dotsContainer.innerHTML = images.map((_, idx) => `
+            <span class="drawer-gallery-dot ${idx === 0 ? 'active' : ''}" data-idx="${idx}"></span>
+        `).join('');
+
+        // Attach click listeners to dots
+        document.querySelectorAll('.drawer-gallery-dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                const idx = parseInt(dot.getAttribute('data-idx'));
+                goToSlide(idx);
+            });
+        });
+
+        // Set initial slide
+        goToSlide(0);
+    }
+
+    function goToSlide(index) {
+        state.activeImageIndex = index;
+        const slidesContainer = document.getElementById('drSlides');
+        const dots = document.querySelectorAll('.drawer-gallery-dot');
+        
+        if (slidesContainer) {
+            slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+        }
+
+        dots.forEach((dot, idx) => {
+            dot.classList.toggle('active', idx === index);
+        });
+    }
+
+    // ==========================================================================
+    // INTERACTIVE API EXPLORER (HERO)
+    // ==========================================================================
+    const explorerData = {
+        profile: {
+            url: "https://api.khushnood.dev/v1/profile",
+            db: "MySQL",
+            json: {
+                "name": "Khushnood Ahmad",
+                "role": "Java Backend Developer",
+                "focus": [
+                    "REST APIs",
+                    "Database Normalization (3NF)",
+                    "Clean System Architecture"
+                ]
+            }
+        },
+        skills: {
+            url: "https://api.khushnood.dev/v1/skills",
+            db: "MySQL",
+            json: {
+                "languages": ["Java", "C++", "Python", "SQL", "JavaScript", "Kotlin"],
+                "frameworks": ["Spring Boot", "Spring MVC", "Spring Data JPA", "JUnit"],
+                "databases": ["MySQL", "MongoDB", "Oracle DB"],
+                "methodologies": ["3NF Schema Design", "RESTful Design", "SOLID", "OOP"]
+            }
+        },
+        philosophy: {
+            url: "https://api.khushnood.dev/v1/philosophy",
+            db: "In-Memory",
+            json: {
+                "cleanCode": "Write code for humans first, optimized for machines.",
+                "normalization": "Normalize to 3NF to prevent redundancy, index for performance.",
+                "solid": "Decoupled modules are easier to test and extend."
+            }
+        }
+    };
+
+    function setupApiExplorer() {
+        if (!el.routeBtns.length) return;
+
+        el.routeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const route = btn.getAttribute('data-route');
+                const data = explorerData[route];
+                if (!data) return;
+
+                // Toggle active buttons
+                el.routeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update URL
+                if (el.explorerUrl) {
+                    el.explorerUrl.textContent = data.url;
+                }
+
+                // Update DB step indicator
+                if (el.traceDbStep) {
+                    el.traceDbStep.textContent = data.db;
+                }
+
+                // Update Response with animation
+                if (el.explorerResponse) {
+                    el.explorerResponse.style.opacity = 0;
+                    setTimeout(() => {
+                        el.explorerResponse.textContent = JSON.stringify(data.json, null, 2);
+                        el.explorerResponse.style.opacity = 1;
+                    }, 150);
+                }
+            });
+        });
+    }
+
+    // ==========================================================================
+    // CONTACT FORM & REAL-TIME PAYLOAD PREVIEW
+    // ==========================================================================
+    function setupContactForm() {
+        if (!el.contactForm) return;
+
+        // Function to update payload JSON preview
+        function updatePayloadPreview() {
+            const payload = {
+                name: el.contactName.value || "",
+                email: el.contactEmail.value || "",
+                message: el.contactMessage.value || ""
+            };
+            if (el.payloadPreview) {
+                el.payloadPreview.textContent = JSON.stringify(payload, null, 2);
+            }
+        }
+
+        // Bind input events to update payload preview
+        [el.contactName, el.contactEmail, el.contactMessage].forEach(input => {
+            if (input) {
+                input.addEventListener('input', updatePayloadPreview);
+            }
+        });
+
+        // Form Submit
+        el.contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = el.contactForm.querySelector('button[type="submit"]');
+            const originalBtnHtml = submitBtn.innerHTML;
+            
+            // Set loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <span class="ping-indicator" style="background-color: var(--warning); margin-right: 0.5rem; display: inline-block;"></span>
+                <span>Sending...</span>
+            `;
+
+            if (el.apiResponsePanel) {
+                el.apiResponsePanel.style.display = 'none';
+            }
+
+            // Simulate server network latency
+            await new Promise(resolve => setTimeout(resolve, 1200));
+
+            try {
+                const name = el.contactName.value;
+                const email = el.contactEmail.value;
+                const message = el.contactMessage.value;
+
+                if (!name || !email || !message) {
+                    throw new Error("Validation Error: Please fill in all required fields.");
+                }
+
+                // Render success status
+                if (el.apiResponseStatus) {
+                    el.apiResponseStatus.textContent = "200 OK";
+                    el.apiResponseStatus.className = "api-status-code";
+                }
+                if (el.apiResponseTime) {
+                    el.apiResponseTime.textContent = `${Math.floor(Math.random() * 30) + 20}ms`;
+                }
+
+                const successResponse = {
+                    "status": "success",
+                    "code": 200,
+                    "timestamp": new Date().toISOString(),
+                    "message": `Connection established successfully. Thank you, ${name}!`,
+                    "routing": "API_GATEWAY_V1 ➔ spring-security ➔ contact-controller",
+                    "actions": "I will review your message and reply via email within 24 hours."
+                };
+
+                if (el.apiResponseText) {
+                    el.apiResponseText.textContent = JSON.stringify(successResponse, null, 2);
+                    el.apiResponseText.classList.remove('error');
+                }
+
+                // Reset form fields and payload preview
+                el.contactForm.reset();
+                updatePayloadPreview();
+
+            } catch (err) {
+                // Render error status
+                if (el.apiResponseStatus) {
+                    el.apiResponseStatus.textContent = "400 Bad Request";
+                    el.apiResponseStatus.className = "api-status-code error";
+                }
+                if (el.apiResponseTime) {
+                    el.apiResponseTime.textContent = "8ms";
+                }
+
+                const errorResponse = {
+                    "status": "error",
+                    "code": 400,
+                    "timestamp": new Date().toISOString(),
+                    "error": err.message || "Invalid submission parameters."
+                };
+
+                if (el.apiResponseText) {
+                    el.apiResponseText.textContent = JSON.stringify(errorResponse, null, 2);
+                    el.apiResponseText.classList.add('error');
+                }
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHtml;
+                
+                if (el.apiResponsePanel) {
+                    el.apiResponsePanel.style.display = 'block';
+                    el.apiResponsePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
+        });
+    }
+
+    // ==========================================================================
+    // INTERACTIVE ERD / TECH CAPABILITY MAP
+    // ==========================================================================
+    const skillsData = {
+        backend: {
+            title: "Java & Spring Boot Core Ecosystem",
+            desc: "Expertise in designing scalable web services, enterprise REST APIs, handling data models, managing configuration properties, and writing production-ready test suites.",
+            tags: ["Java SE/EE", "Spring Boot", "Spring MVC", "Spring JDBC", "REST APIs", "Maven", "Gradle", "JUnit", "SQL"]
+        },
+        databases: {
+            title: "Data Architecture & Storage Engines",
+            desc: "Proficient in relational schema modeling, normalization (up to 3NF), index optimization, and utilizing document storage systems for high throughput writes and low latency reads.",
+            tags: ["MySQL", "MongoDB", "Oracle SQL", "Database Normalization", "Query Tuning", "ER Diagrams", "Indexes", "Transactions"]
+        },
+        programming: {
+            title: "Core Programming Fundamentals",
+            desc: "Solid foundation in core object-oriented structures, functional patterns, algorithmic analysis, design patterns, and cross-compiling applications across standard paradigms.",
+            tags: ["Java", "C++", "Python", "JavaScript", "Kotlin", "Data Structures", "Algorithms", "Object-Oriented Design"]
+        },
+        tools: {
+            title: "Developer Workflow & Environment Tools",
+            desc: "Command over revision control, terminal debug environments, API testing cycles, dependency lifecycles, and IDE performance profiles.",
+            tags: ["Git", "GitHub", "IntelliJ IDEA", "Postman", "Maven Compiler", "Terminal CLI", "Unix Shell Utilities"]
+        },
+        concepts: {
+            title: "Software Engineering Core Concepts",
+            desc: "Rigorous alignment with Clean Code principles, standard data architectures, API interface guidelines, and system modeling methodologies.",
+            tags: ["OOP Principles", "API Design", "Database Modeling", "Clean Code", "Design Patterns", "Systems Architecture"]
+        }
+    };
+
+    function setupErdInteractivity() {
+        if (!el.techSelectBtns.length) return;
+
+        el.techSelectBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.getAttribute('data-cat');
+                
+                // Highlight button
+                el.techSelectBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Highlight corresponding ERD table
+                el.erdTables.forEach(table => {
+                    table.classList.remove('active-relation');
+                    if (table.getAttribute('data-table') === category) {
+                        table.classList.add('active-relation');
+                    }
+                });
+
+                // Update text panel
+                updateExpertiseDisplay(category);
+            });
+        });
+
+        // Add direct click listener to ERD tables
+        el.erdTables.forEach(table => {
+            table.addEventListener('click', () => {
+                const tableCat = table.getAttribute('data-table');
+                
+                // Click matching category button
+                const matchingBtn = Array.from(el.techSelectBtns).find(btn => btn.getAttribute('data-cat') === tableCat);
+                if (matchingBtn) {
+                    matchingBtn.click();
+                }
+            });
+        });
+
+        // Default display on load
+        updateExpertiseDisplay('backend');
+    }
+
+    function updateExpertiseDisplay(category) {
+        const info = skillsData[category];
+        if (!info) return;
+
+        el.expertiseTitle.textContent = info.title;
+        el.expertiseDesc.textContent = info.desc;
+        
+        el.expertiseTags.innerHTML = info.tags.map(tag => `
+            <span class="expertise-tag">${tag}</span>
+        `).join('');
+    }
+
+    // ==========================================================================
+    // KEYBOARD SHORTCUTS (CMS DOCK TRIGGER)
+    // ==========================================================================
+    function setupKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // Secret keybind: Ctrl + Shift + P
+            if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'P') {
+                e.preventDefault();
+                console.log('⚡ Secret developer gateway activated. Redirecting to admin projects panel.');
+                
+                // Add a small terminal notification effect
+                const logMsg = "Developer CMS Gateway requested. Opening admin dashboard... [Ctrl+Shift+P]";
+                appendLogLine(logMsg);
+                
+                // Redirect after a brief visual pause
+                setTimeout(() => {
+                    window.location.href = 'admin/index.html';
+                }, 800);
+            }
+        });
+    }
+
+    // Run Engine Init
+    init();
+});

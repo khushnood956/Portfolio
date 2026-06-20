@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow"> <!-- Prevent search engine indexation of admin area -->
+    <title>CMS Gateway v1.0.4 | Khushnood Ahmad</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <!-- Load fallback local projects data in case of file protocol CORS -->
+    <script src="../data/projects.js"></script>
+    <style>
+        /* Specific adjustments for CMS dashboard split view */
+        body {
+            padding-top: calc(var(--nav-height) + 1.5rem);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar Navigation -->
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="nav-brand-accent">&lt;</span>
+                <span>Khushnood</span>
+                <span class="nav-brand-accent">/&gt;</span>
+                <span class="nav-brand-tag">CMS_SYS</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Return to Site</a></li>
+            </ul>
+            <div class="nav-system-status">
+                <div class="system-ping">
+                    <span class="ping-indicator" style="background-color: var(--success);"></span>
+                    <span>SECURE_LOCAL_MODE</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main CMS Interface -->
+    <main class="admin-container">
+        <div class="admin-header">
+            <div class="admin-title-wrap">
+                <span class="admin-logo-mono">[CMS_GATEWAY_V1]</span>
+                <h2>Portfolio Project Editor</h2>
+            </div>
+            <div>
+                <button class="btn btn-primary" id="exportBtn">Export projects.json</button>
+            </div>
+        </div>
+
+        <div class="admin-grid">
+            <!-- Project Form Panel -->
+            <section class="admin-form-panel">
+                <h3 class="admin-form-title" id="formTitle">Create New Project</h3>
+                <form id="projectForm" style="display: flex; flex-direction: column; gap: 1rem;">
+                    
+                    <div class="admin-form-group">
+                        <label for="pTitle">Project Title *</label>
+                        <input type="text" id="pTitle" placeholder="e.g. Hospital Management System" required>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pTagline">Tagline *</label>
+                        <input type="text" id="pTagline" placeholder="e.g. Command-line administrative app in Java..." required>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pCategory">Category *</label>
+                        <select id="pCategory">
+                            <option value="Backend Core">Backend Core</option>
+                            <option value="Databases">Databases</option>
+                            <option value="Programming Core">Programming Core</option>
+                            <option value="Systems Engineering">Systems Engineering</option>
+                            <option value="Mobile Dev">Mobile Dev</option>
+                        </select>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pTechStack">Tech Stack (comma separated) *</label>
+                        <input type="text" id="pTechStack" placeholder="e.g. Java, Spring Boot, Spring JDBC" required>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pImage">Main Showcase Image *</label>
+                        <input type="text" id="pImage" placeholder="e.g. hp03.png" required>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pImages">Screenshots (comma separated)</label>
+                        <input type="text" id="pImages" placeholder="e.g. hp03.png, hp02.png, hp01.png">
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pGithub">GitHub Link</label>
+                        <input type="text" id="pGithub" placeholder="e.g. https://github.com/... or #">
+                    </div>
+
+                    <div class="admin-form-group checkbox-row">
+                        <input type="checkbox" id="pFeatured">
+                        <label for="pFeatured">Highlight as Featured Project</label>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pDescription">Short Project Description</label>
+                        <textarea id="pDescription" placeholder="Overview of what this project is..." rows="3"></textarea>
+                    </div>
+
+                    <!-- Case Study Extended Fields -->
+                    <div style="margin-top: 1rem; border-top: 1px dashed var(--border-color); padding-top: 1rem;">
+                        <h4 style="font-family: var(--font-heading); margin-bottom: 0.75rem; font-size: 0.95rem; color: var(--accent);">Case Study Parameters</h4>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pProblem">Problem Solved</label>
+                        <textarea id="pProblem" placeholder="The clinical bottlenecks that this project aimed to solve..." rows="2"></textarea>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pArchitecture">System Architecture</label>
+                        <textarea id="pArchitecture" placeholder="Model-View-Controller, services structure, collections used..." rows="2"></textarea>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pChallenges">Key Engineering Challenges</label>
+                        <textarea id="pChallenges" placeholder="Pointer mechanics, memory leaks, referential loops..." rows="2"></textarea>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pLearnings">Key Technical Learnings</label>
+                        <textarea id="pLearnings" placeholder="HashMaps lookup efficiency, garbage collection behavior..." rows="2"></textarea>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="pFuture">Future Improvements</label>
+                        <textarea id="pFuture" placeholder="Relational DB mapping, spring context security implementations..." rows="2"></textarea>
+                    </div>
+
+                    <div class="admin-form-actions">
+                        <button type="submit" class="btn btn-primary" style="flex: 2;">Save Project</button>
+                        <button type="button" class="btn btn-secondary" id="resetBtn" style="flex: 1;">Clear Form</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Projects Live List Panel -->
+            <section class="admin-list-panel">
+                <div class="admin-list-header">
+                    <h3 class="admin-list-title">System Node Catalog</h3>
+                    <span class="badge badge-success">ACTIVE</span>
+                </div>
+                <div class="admin-project-list" id="projectList">
+                    <!-- Loaded dynamically via scripts/cms.js -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Export Overlay Modal -->
+    <div class="admin-export-overlay" id="exportOverlay">
+        <div class="admin-export-box">
+            <h3 style="font-family: var(--font-heading); display: flex; justify-content: space-between; align-items: center;">
+                <span>Export System Data Payload</span>
+                <button id="closeExport" style="background:none; border:none; color:inherit; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                Since browsers cannot write directly to your local workspace code for security reasons, follow these 2 simple steps:
+            </p>
+            <div style="background-color: var(--bg-terminal); border:1px solid var(--border-color); padding: 0.85rem; border-radius: var(--radius-md); font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-accent);">
+                1. Click <strong>Download projects.json</strong> and replace <code style="color:var(--success)">data/projects.json</code><br>
+                2. Click <strong>Copy Clipboard</strong>, open <code style="color:var(--success)">data/projects.js</code>, clear it, paste, and prepend with <code style="color:var(--success)">window.projectsData = </code>
+            </div>
+            <textarea id="jsonOutput" readonly></textarea>
+            <div style="display:flex; gap: 1rem;">
+                <button class="btn btn-primary" id="downloadJsonBtn" style="flex: 1;">Download projects.json</button>
+                <button class="btn btn-secondary" id="copyJsonBtn" style="flex: 1;">Copy Clipboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Footer -->
+    <footer class="footer" style="margin-top: 4rem;">
+        <div class="section-container">
+            <div class="footer-grid">
+                <div class="footer-copy">
+                    <p>&copy; 2026 Khushnood Ahmad. Secure Admin Area.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Load Admin Controller script -->
+    <script src="../scripts/cms.js"></script>
+</body>
+</html>
