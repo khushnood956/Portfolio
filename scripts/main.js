@@ -210,22 +210,38 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        el.projectsGrid.innerHTML = filtered.map(p => `
-            <div class="project-card" data-id="${p.id}">
-                <div class="project-card-image">
-                    <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='project_images/pic.png'">
-                    <span class="project-card-category badge badge-accent">${p.category}</span>
-                </div>
-                <div class="project-card-info">
-                    <h3 class="project-card-title">${p.title}</h3>
-                    <p class="project-card-tagline">${p.tagline}</p>
-                    <div class="project-card-tags">
-                        ${p.techStack.slice(0, 3).map(t => `<span class="project-card-tag">${t}</span>`).join('')}
-                        ${p.techStack.length > 3 ? `<span class="project-card-tag">+${p.techStack.length - 3}</span>` : ''}
+        el.projectsGrid.innerHTML = filtered.map(p => {
+            const projectImages = (p.images && p.images.length > 0) ? p.images : [p.image || 'project_images/pic.png'];
+            return `
+                <div class="project-card" data-id="${p.id}">
+                    <div class="project-card-image">
+                        <div class="project-card-slides" id="slides-${p.id}" data-active-idx="0">
+                            ${projectImages.map(img => `
+                                <img src="${img}" alt="${p.title}" loading="lazy" onerror="this.src='project_images/pic.png'">
+                            `).join('')}
+                        </div>
+                        ${projectImages.length > 1 ? `
+                            <button class="project-card-nav-btn prev" data-target="${p.id}" aria-label="Previous image">&lsaquo;</button>
+                            <button class="project-card-nav-btn next" data-target="${p.id}" aria-label="Next image">&rsaquo;</button>
+                            <div class="project-card-dots" id="dots-${p.id}">
+                                ${projectImages.map((_, idx) => `
+                                    <span class="project-card-dot ${idx === 0 ? 'active' : ''}" data-target="${p.id}" data-idx="${idx}"></span>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        <span class="project-card-category badge badge-accent">${p.category}</span>
+                    </div>
+                    <div class="project-card-info">
+                        <h3 class="project-card-title">${p.title}</h3>
+                        <p class="project-card-tagline">${p.tagline}</p>
+                        <div class="project-card-tags">
+                            ${p.techStack.slice(0, 3).map(t => `<span class="project-card-tag">${t}</span>`).join('')}
+                            ${p.techStack.length > 3 ? `<span class="project-card-tag">+${p.techStack.length - 3}</span>` : ''}
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
 
         // Attach click listeners to cards
         document.querySelectorAll('.project-card').forEach(card => {
@@ -235,6 +251,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (project) openProjectDetail(project);
             });
         });
+
+        // Attach click listeners to card navigation buttons and dots
+        document.querySelectorAll('.project-card-nav-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent opening the detail drawer
+                const projectId = parseInt(btn.getAttribute('data-target'));
+                const project = state.projects.find(p => p.id === projectId);
+                if (!project) return;
+                const images = (project.images && project.images.length > 0) ? project.images : [project.image];
+                if (images.length <= 1) return;
+
+                const slidesContainer = document.getElementById(`slides-${projectId}`);
+                if (!slidesContainer) return;
+                let activeIdx = parseInt(slidesContainer.getAttribute('data-active-idx')) || 0;
+
+                if (btn.classList.contains('prev')) {
+                    activeIdx = (activeIdx - 1 + images.length) % images.length;
+                } else {
+                    activeIdx = (activeIdx + 1) % images.length;
+                }
+
+                updateCardSlide(projectId, activeIdx);
+            });
+        });
+
+        document.querySelectorAll('.project-card-dot').forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent opening the detail drawer
+                const projectId = parseInt(dot.getAttribute('data-target'));
+                const activeIdx = parseInt(dot.getAttribute('data-idx'));
+                updateCardSlide(projectId, activeIdx);
+            });
+        });
+    }
+
+    function updateCardSlide(projectId, index) {
+        const slidesContainer = document.getElementById(`slides-${projectId}`);
+        if (!slidesContainer) return;
+        
+        slidesContainer.setAttribute('data-active-idx', index);
+        slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+
+        const dotsContainer = document.getElementById(`dots-${projectId}`);
+        if (dotsContainer) {
+            const dots = dotsContainer.querySelectorAll('.project-card-dot');
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === index);
+            });
+        }
     }
 
     // ==========================================================================
@@ -286,6 +351,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('drArchitecture').textContent = project.architecture || "In-memory structures built with SOLID principles.";
         document.getElementById('drChallenges').textContent = project.challenges || "No challenge details provided.";
         document.getElementById('drLearnings').textContent = project.learnings || "No learning outcomes logged.";
+        
+        const drFuture = document.getElementById('drFuture');
+        if (drFuture) {
+            drFuture.textContent = project.futureImprovements || "No future upgrades planned.";
+        }
         
         // Render tech tags
         const techContainer = document.getElementById('drTech');

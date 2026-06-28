@@ -144,7 +144,7 @@
     ],
     "github": "https://github.com/khushnood956/In-Memory-DBMS",
     "live": "#",
-    "featured": false,
+    "featured": true,
     "problem": "Understanding how databases execute queries and guarantee durability without looking under the hood of production databases can be difficult for backend developers.",
     "architecture": "Consists of a Query Parser engine, a Catalog Manager for table definitions, and a Storage Engine writing rows to files. Table files store field values delimited by custom markers, and indices are held in memory for quick retrieval.",
     "challenges": "Designing an efficient text parser that handles complex conditions (such as WHERE clauses with operators) and serializing record structures without corruption.",
@@ -305,78 +305,5 @@
     "challenges": "Handling high recursion call counts and optimizing search paths to avoid testing millions of invalid combinations on harder boards.",
     "learnings": "Gained a deep understanding of recursive functions, backtracking patterns, constraint-satisfaction problems, and array traversal optimizations.",
     "futureImprovements": "Implement the Minimum Remaining Values (MRV) heuristic to choose cells with the fewest candidates first, drastically reducing search paths."
-  },
-  {
-    "id": 12,
-    "title": "PropInsight",
-    "tagline": "Data-driven real estate discovery, comparison, and investment analysis.",
-    "category": "Backend Core",
-    "techStack": [
-      "PHP 8.3",
-      "Laravel",
-      "Blade",
-      "MySQL",
-      "Eloquent ORM",
-      "Bootstrap 5.3",
-      "JavaScript",
-      "Vite",
-      "Custom CSS"
-    ],
-    "image": "prop1.png",
-    "images": [
-      "prop2.png",
-      "prob3.png",
-      "prop4.png"
-    ],
-    "github": "https://github.com/khushnood956/PropInsight-WebTech_project",
-    "live": "#",
-    "featured": false,
-    "description": "PropInsight is a Laravel-based real estate analytics platform that lets users browse, filter, compare, and analyze properties with market trend data and mortgage/ROI calculations.",
-    "problem": "Static property listings are hard to search, compare, and evaluate, so this project centralizes discovery and investment analysis in one place.",
-    "architecture": "Laravel MVC with routing, controllers, Eloquent models, Blade views, MySQL tables for cities, property types, properties, images, and market trends, plus session-based comparison.",
-    "challenges": "Building multi-criteria search and filtering, avoiding N+1 queries with eager loading, managing 3-property comparison state in the session, and implementing financial calculations cleanly.",
-    "learnings": "Laravel routing, controller design, Blade layout inheritance, Eloquent relationships, server-side validation, pagination, and session state management.",
-    "futureImprovements": "Add authentication, admin CRUD for properties, saved favorites, real-time market data integration, and richer i"
-  },
-  {
-    "id": 13,
-    "title": "CareSync",
-    "tagline": "Secure hospital appointment scheduling and clinical workflow management system",
-    "category": "Backend Core",
-    "techStack": [
-      "Java 21",
-      "Spring Boot 3.3.0",
-      "Spring Security",
-      "Spring Data JPA",
-      "Hibernate",
-      "JWT",
-      "MySQL 8",
-      "HTML5",
-      "CSS3",
-      "JavaScript",
-      "Bootstrap 5",
-      "Chart.js",
-      "JUnit 5",
-      "Mockito",
-      "MockMvc"
-    ],
-    "image": "crs1.png",
-    "images": [
-      "crs2.png",
-      "crs3.png",
-      "crs4.png",
-      "crs5.png",
-      "crs6.png",
-      "crs7.png"
-    ],
-    "github": "https://github.com/khushnood956/CareSync",
-    "live": "#",
-    "featured": true,
-    "description": "CareSync is a role-based hospital appointment scheduling platform that streamlines patient booking, doctor slot management, and admin oversight with secure authentication and audit logging",
-    "problem": "Replaces manual hospital scheduling with a secure digital workflow for booking, rescheduling, canceling, and managing appointments across patients, doctors, and administrators.",
-    "architecture": "Layered Spring Boot architecture with controllers, services, repositories, entities, DTOs, and security filters. JWT-based authentication, role-based access control, JPA persistence, and a MySQL-backed data layer support patient, doctor, admin, and reporting modules.",
-    "challenges": "Preventing double-bookings, enforcing the 24-hour cancellation and rescheduling rule, securing role-based access with JWT, protecting against XSS, and handling safe deletion of doctors and departments without breaking data integrity.",
-    "learnings": "Building stateless authentication in Spring Security, modeling domain relationships with JPA, enforcing business rules through service-layer validation, sanitizing user input safely, and testing business logic with JUnit, Mockito, and MockMvc.",
-    "futureImprovements": "Add appointment reminders, calendar integration, richer analytics exports, file uploads for clinical records, pagination and search enhancements, and a more polished mobile-friendly UI."
   }
 ]
