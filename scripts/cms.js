@@ -176,8 +176,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const tagline = document.getElementById('pTagline').value.trim();
         const category = document.getElementById('pCategory').value;
         const techStack = document.getElementById('pTechStack').value.split(',').map(s => s.trim()).filter(Boolean);
-        const image = document.getElementById('pImage').value.trim() || 'project_images/pic.png';
-        const images = document.getElementById('pImages').value.split(',').map(s => s.trim()).filter(Boolean);
+        
+        let imageInput = document.getElementById('pImage').value.trim() || 'project_images/pic.png';
+        let imagesInput = document.getElementById('pImages').value.split(',').map(s => s.trim()).filter(Boolean);
+        
+        // Normalize paths: prepend project_images/ if not already present, and remove encoding/spacing errors
+        const normalizePath = (pathStr) => {
+            if (!pathStr) return '';
+            // Remove any existing %20 and trim spaces
+            let cleaned = pathStr.replace(/%20/g, ' ').trim();
+            if (cleaned.startsWith('project_images/') || cleaned.startsWith('http://') || cleaned.startsWith('https://') || cleaned.startsWith('data:')) {
+                return cleaned;
+            }
+            return 'project_images/' + cleaned;
+        };
+
+        const image = normalizePath(imageInput);
+        const images = imagesInput.map(normalizePath);
+
         const github = document.getElementById('pGithub').value.trim() || '#';
         const featured = document.getElementById('pFeatured').checked;
         const description = document.getElementById('pDescription').value.trim();
