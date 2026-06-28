@@ -322,11 +322,12 @@
       "Vite",
       "Custom CSS"
     ],
-    "image": "prop1.png",
+    "image": "project_images/prop1.png",
     "images": [
-      "prop2.png",
-      "prob3.png",
-      "prop4.png"
+      "project_images/prop1.png",
+      "project_images/prop2.png",
+      "project_images/prop3.png",
+      "project_images/prop4.png"
     ],
     "github": "https://github.com/khushnood956/PropInsight-WebTech_project",
     "live": "#",
@@ -360,14 +361,15 @@
       "Mockito",
       "MockMvc"
     ],
-    "image": "crs1.png",
+    "image": "project_images/crs1.png",
     "images": [
-      "crs2.png",
-      "crs3.png",
-      "crs4.png",
-      "crs5.png",
-      "crs6.png",
-      "crs7.png"
+      "project_images/crs1.png",
+      "project_images/crs2.png",
+      "project_images/crs3.png",
+      "project_images/crs4.png",
+      "project_images/crs5.png",
+      "project_images/crs6.png",
+      "project_images/crs7.png"
     ],
     "github": "https://github.com/khushnood956/CareSync",
     "live": "#",

@@ -70,7 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const parsed = JSON.parse(cachedProjects);
                 // Self-healing: if cache doesn't have WHATSAPP SPAM DETECTOR (id: 9) or uses old image paths, discard it
                 const hasWsd = parsed.some(p => p.id === 9);
-                const hasUpdatedPaths = parsed.every(p => !p.image || p.image.startsWith('project_images/'));
+                const hasUpdatedPaths = parsed.every(p => 
+                    (!p.image || p.image.startsWith('project_images/')) && 
+                    (!p.images || p.images.every(img => img.startsWith('project_images/')))
+                );
                 if (hasWsd && hasUpdatedPaths) {
                     state.projects = parsed;
                     console.log('✅ Projects loaded from local CMS cache.');
