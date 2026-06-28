@@ -501,8 +501,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.apiResponsePanel.style.display = 'none';
             }
 
-            // Simulate server network latency
-            await new Promise(resolve => setTimeout(resolve, 1200));
+            // Web3Forms Integration Config
+            const WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY_HERE"; // REPLACE WITH YOUR ACCESS KEY FROM WEB3FORMS.COM
 
             try {
                 const name = el.contactName.value;
@@ -513,13 +513,46 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error("Validation Error: Please fill in all required fields.");
                 }
 
+                let emailSent = false;
+                let apiMessage = "Message logged in system database.";
+
+                if (WEB3FORMS_ACCESS_KEY && WEB3FORMS_ACCESS_KEY !== "YOUR_WEB3FORMS_ACCESS_KEY_HERE") {
+                    const response = await fetch("https://api.web3forms.com/submit", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify({
+                            access_key: WEB3FORMS_ACCESS_KEY,
+                            name: name,
+                            email: email,
+                            message: message,
+                            subject: `Portfolio Contact from ${name}`
+                        })
+                    });
+
+                    const resData = await response.json();
+                    if (response.ok && resData.success) {
+                        emailSent = true;
+                        apiMessage = "Email dispatched successfully via Web3Forms gateway.";
+                    } else {
+                        throw new Error(resData.message || "Failed to dispatch email via Web3Forms API.");
+                    }
+                } else {
+                    // Simulate latency for the mockup experience
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    console.warn("⚠️ Web3Forms Access Key is missing or default. Email dispatch skipped (simulation mode).");
+                    apiMessage = "Message simulation successful (Key not configured. Please get a free key from web3forms.com to send actual emails).";
+                }
+
                 // Render success status
                 if (el.apiResponseStatus) {
                     el.apiResponseStatus.textContent = "200 OK";
                     el.apiResponseStatus.className = "api-status-code";
                 }
                 if (el.apiResponseTime) {
-                    el.apiResponseTime.textContent = `${Math.floor(Math.random() * 30) + 20}ms`;
+                    el.apiResponseTime.textContent = `${Math.floor(Math.random() * 50) + 120}ms`;
                 }
 
                 const successResponse = {
@@ -527,7 +560,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     "code": 200,
                     "timestamp": new Date().toISOString(),
                     "message": `Connection established successfully. Thank you, ${name}!`,
-                    "routing": "API_GATEWAY_V1 ➔ spring-security ➔ contact-controller",
+                    "email_dispatched": emailSent ? "Yes" : "No (Simulation Mode)",
+                    "gateway_logs": apiMessage,
+                    "routing": "API_GATEWAY_V1 ➔ web3forms-api-gateway ➔ contact-controller",
                     "actions": "I will review your message and reply via email within 24 hours."
                 };
 
@@ -547,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     el.apiResponseStatus.className = "api-status-code error";
                 }
                 if (el.apiResponseTime) {
-                    el.apiResponseTime.textContent = "8ms";
+                    el.apiResponseTime.textContent = "25ms";
                 }
 
                 const errorResponse = {
