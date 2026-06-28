@@ -248,6 +248,30 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeProjectDrawer();
         });
+
+        // Prev/Next slide navigation button event handlers
+        const prevBtn = document.getElementById('drPrevBtn');
+        const nextBtn = document.getElementById('drNextBtn');
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (!state.activeProject) return;
+                const images = state.activeProject.images || [state.activeProject.image];
+                let newIdx = state.activeImageIndex - 1;
+                if (newIdx < 0) newIdx = images.length - 1;
+                goToSlide(newIdx);
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (!state.activeProject) return;
+                const images = state.activeProject.images || [state.activeProject.image];
+                let newIdx = state.activeImageIndex + 1;
+                if (newIdx >= images.length) newIdx = 0;
+                goToSlide(newIdx);
+            });
+        }
     }
 
     function openProjectDetail(project) {
@@ -295,31 +319,53 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderSlideshow(images) {
         const slidesContainer = document.getElementById('drSlides');
         const dotsContainer = document.getElementById('drDots');
+        const prevBtn = document.getElementById('drPrevBtn');
+        const nextBtn = document.getElementById('drNextBtn');
 
         if (!slidesContainer) return;
 
+        // Render images
         slidesContainer.innerHTML = images.map(img => `
-            <img class="drawer-slide-img" src="${img}" alt="Screenshot" onerror="this.src='project_images/pic.png'">
+            <img class="drawer-slide-img" src="${img}" alt="Screenshot" onerror="this.src='project_images/pic.png'" style="cursor: pointer;">
         `).join('');
 
         if (images.length <= 1) {
-            dotsContainer.innerHTML = '';
+            if (dotsContainer) dotsContainer.innerHTML = '';
+            if (prevBtn) prevBtn.style.display = 'none';
+            if (nextBtn) nextBtn.style.display = 'none';
             slidesContainer.style.transform = 'translateX(0)';
             return;
         }
 
-        // Dots indicator
-        dotsContainer.innerHTML = images.map((_, idx) => `
-            <span class="drawer-gallery-dot ${idx === 0 ? 'active' : ''}" data-idx="${idx}"></span>
-        `).join('');
+        // Show navigation buttons if multiple images
+        if (prevBtn) prevBtn.style.display = 'flex';
+        if (nextBtn) nextBtn.style.display = 'flex';
 
-        // Attach click listeners to dots
-        document.querySelectorAll('.drawer-gallery-dot').forEach(dot => {
-            dot.addEventListener('click', () => {
-                const idx = parseInt(dot.getAttribute('data-idx'));
-                goToSlide(idx);
+        // Dots indicator
+        if (dotsContainer) {
+            dotsContainer.innerHTML = images.map((_, idx) => `
+                <span class="drawer-gallery-dot ${idx === 0 ? 'active' : ''}" data-idx="${idx}"></span>
+            `).join('');
+
+            // Attach click listeners to dots
+            document.querySelectorAll('.drawer-gallery-dot').forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const idx = parseInt(dot.getAttribute('data-idx'));
+                    goToSlide(idx);
+                });
             });
-        });
+        }
+
+        // Allow clicking on the image to advance to the next slide
+        // Remove previous event listener if any (re-add to prevent duplication)
+        slidesContainer.onclick = () => {
+            if (!state.activeProject) return;
+            const imgs = state.activeProject.images || [state.activeProject.image];
+            if (imgs.length <= 1) return;
+            let newIdx = state.activeImageIndex + 1;
+            if (newIdx >= imgs.length) newIdx = 0;
+            goToSlide(newIdx);
+        };
 
         // Set initial slide
         goToSlide(0);
