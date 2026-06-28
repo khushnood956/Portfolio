@@ -227,6 +227,7 @@ window.projectsData = [
     ],
     "image": "project image/wsd01.png",
     "images": [
+      "project image/wsd01.png",
       "project image/wsd02.png"
     ],
     "github": "https://github.com/khushnood956/WHATSAPP-SPAM-DETECTOR",

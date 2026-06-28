@@ -83,6 +83,14 @@ const server = http.createServer((req, res) => {
     // Serve Static Assets
     // Normalize URL path to resolve root index files
     let urlPath = url === '/' ? '/index.HTML' : url;
+    
+    // Decode URI component to handle spaces (%20) in folder names/file paths
+    try {
+        urlPath = decodeURIComponent(urlPath);
+    } catch (e) {
+        console.error('Failed to decode URI:', urlPath, e);
+    }
+    
     let filePath = path.join(__dirname, urlPath);
     
     // Prevent directory traversal attacks
