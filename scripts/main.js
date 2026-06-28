@@ -182,7 +182,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderProjects() {
         if (!el.projectsGrid) return;
 
-        const filtered = state.projects.filter(project => {
+        const isCatalogPage = document.querySelector('.catalog-header') !== null;
+
+        // Filter projects by category first
+        let filtered = state.projects.filter(project => {
             if (state.activeCategory === 'All') return true;
             if (state.activeCategory === 'Backend' && 
                 (project.category === 'Backend Core' || project.category === 'Systems Engineering')) return true;
@@ -190,6 +193,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (state.activeCategory === 'Programming' && project.category === 'Programming Core') return true;
             return false;
         });
+
+        // If on the homepage, filter to only show featured projects, and limit to 6 projects
+        if (!isCatalogPage) {
+            filtered = filtered.filter(project => project.featured);
+            // Limit to 6 projects for the homepage "pagination" view
+            filtered = filtered.slice(0, 6);
+        }
 
         if (filtered.length === 0) {
             el.projectsGrid.innerHTML = `
