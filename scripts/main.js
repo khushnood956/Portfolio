@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Web3Forms Integration Config
-            const WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY_HERE"; // REPLACE WITH YOUR ACCESS KEY FROM WEB3FORMS.COM
+            const WEB3FORMS_ACCESS_KEY = "bd1f3efe-1153-4a64-a6e7-642793231cdf"; 
 
             try {
                 const name = el.contactName.value;
