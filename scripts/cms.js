@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const parsed = JSON.parse(localData);
                 // Self-healing: if cache doesn't have WHATSAPP SPAM DETECTOR (id: 9) or uses old image paths, discard it
                 const hasWsd = parsed.some(p => p.id === 9);
-                const hasUpdatedPaths = parsed.every(p => !p.image || p.image.startsWith('project image/'));
+                const hasUpdatedPaths = parsed.every(p => !p.image || p.image.startsWith('project_images/'));
                 if (hasWsd && hasUpdatedPaths) {
                     state.projects = parsed;
                     console.log('✅ Loaded projects from local cache.');
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tagline = document.getElementById('pTagline').value.trim();
         const category = document.getElementById('pCategory').value;
         const techStack = document.getElementById('pTechStack').value.split(',').map(s => s.trim()).filter(Boolean);
-        const image = document.getElementById('pImage').value.trim() || 'project image/pic.png';
+        const image = document.getElementById('pImage').value.trim() || 'project_images/pic.png';
         const images = document.getElementById('pImages').value.split(',').map(s => s.trim()).filter(Boolean);
         const github = document.getElementById('pGithub').value.trim() || '#';
         const featured = document.getElementById('pFeatured').checked;

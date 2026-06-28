@@ -11,11 +11,11 @@ window.projectsData = [
       "Collections Framework",
       "Data Structures"
     ],
-    "image": "project image/hp03.png",
+    "image": "project_images/hp03.png",
     "images": [
-      "project image/hp03.png",
-      "project image/hp02.png",
-      "project image/hp01.png"
+      "project_images/hp03.png",
+      "project_images/hp02.png",
+      "project_images/hp01.png"
     ],
     "github": "https://github.com/khushnood956/Hospital-Management-System",
     "live": "#",
@@ -38,11 +38,11 @@ window.projectsData = [
       "Linked Lists",
       "Memory Management"
     ],
-    "image": "project image/in01.png",
+    "image": "project_images/in01.png",
     "images": [
-      "project image/in01.png",
-      "project image/in02.png",
-      "project image/in03.png"
+      "project_images/in01.png",
+      "project_images/in02.png",
+      "project_images/in03.png"
     ],
     "github": "https://github.com/khushnood956/Inventory-Management-System",
     "live": "#",
@@ -65,12 +65,12 @@ window.projectsData = [
       "SQLite",
       "Material Design"
     ],
-    "image": "project image/kt001.png",
+    "image": "project_images/kt001.png",
     "images": [
-      "project image/kt001.png",
-      "project image/kt00.png",
-      "project image/kt02.png",
-      "project image/kt03.png"
+      "project_images/kt001.png",
+      "project_images/kt00.png",
+      "project_images/kt02.png",
+      "project_images/kt03.png"
     ],
     "github": "https://github.com/khushnood956/Money-Manager-App",
     "live": "#",
@@ -93,10 +93,10 @@ window.projectsData = [
       "Parsing Algorithms",
       "Database Theory"
     ],
-    "image": "project image/db01.png",
+    "image": "project_images/db01.png",
     "images": [
-      "project image/db01.png",
-      "project image/db02.png"
+      "project_images/db01.png",
+      "project_images/db02.png"
     ],
     "github": "https://github.com/khushnood956/In-Memory-DBMS",
     "live": "#",
@@ -119,11 +119,11 @@ window.projectsData = [
       "Relational Modeling",
       "ER Diagrams"
     ],
-    "image": "project image/sql01.jpg",
+    "image": "project_images/sql01.jpg",
     "images": [
-      "project image/sql01.jpg",
-      "project image/SQL02.jpg",
-      "project image/SQL03.jpg"
+      "project_images/sql01.jpg",
+      "project_images/SQL02.jpg",
+      "project_images/SQL03.jpg"
     ],
     "github": "https://github.com/khushnood956/Database-Schema-Design",
     "live": "#",
@@ -146,9 +146,9 @@ window.projectsData = [
       "Recursion",
       "Constraint Satisfaction"
     ],
-    "image": "project image/sodoku.png",
+    "image": "project_images/sodoku.png",
     "images": [
-      "project image/sodoku.png"
+      "project_images/sodoku.png"
     ],
     "github": "https://github.com/khushnood956/Sudoku-Solver-Game",
     "live": "#",
@@ -171,9 +171,9 @@ window.projectsData = [
       "File IO",
       "OOP Design"
     ],
-    "image": "project image/todolist.png",
+    "image": "project_images/todolist.png",
     "images": [
-      "project image/todolist.png"
+      "project_images/todolist.png"
     ],
     "github": "https://github.com/khushnood956/Todo-List",
     "live": "#",
@@ -196,9 +196,9 @@ window.projectsData = [
       "OOP",
       "Transaction Logic"
     ],
-    "image": "project image/banking.png",
+    "image": "project_images/banking.png",
     "images": [
-      "project image/banking.png"
+      "project_images/banking.png"
     ],
     "github": "https://github.com/khushnood956/Banking-Management-System",
     "live": "#",
@@ -225,10 +225,10 @@ window.projectsData = [
       "NLTK",
       "Joblib"
     ],
-    "image": "project image/wsd01.png",
+    "image": "project_images/wsd01.png",
     "images": [
-      "project image/wsd01.png",
-      "project image/wsd02.png"
+      "project_images/wsd01.png",
+      "project_images/wsd02.png"
     ],
     "github": "https://github.com/khushnood956/WHATSAPP-SPAM-DETECTOR",
     "live": "#",
