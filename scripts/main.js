@@ -64,9 +64,27 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadProjectsData() {
         // First check localStorage for live preview of local CMS edits
         const cachedProjects = localStorage.getItem('khushnood_portfolio_projects');
+        let useCache = false;
         if (cachedProjects) {
-            state.projects = JSON.parse(cachedProjects);
-            console.log('✅ Projects loaded from local CMS cache.');
+            try {
+                const parsed = JSON.parse(cachedProjects);
+                // Self-healing: if cache doesn't have WHATSAPP SPAM DETECTOR (id: 9) or uses old image paths, discard it
+                const hasWsd = parsed.some(p => p.id === 9);
+                const hasUpdatedPaths = parsed.every(p => !p.image || p.image.startsWith('project image/'));
+                if (hasWsd && hasUpdatedPaths) {
+                    state.projects = parsed;
+                    console.log('✅ Projects loaded from local CMS cache.');
+                    useCache = true;
+                } else {
+                    console.log('⚠️ Local cache is outdated. Clearing local cache to load fresh database files.');
+                    localStorage.removeItem('khushnood_portfolio_projects');
+                }
+            } catch (e) {
+                localStorage.removeItem('khushnood_portfolio_projects');
+            }
+        }
+
+        if (useCache) {
             renderProjects();
             return;
         }
@@ -185,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.projectsGrid.innerHTML = filtered.map(p => `
             <div class="project-card" data-id="${p.id}">
                 <div class="project-card-image">
-                    <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='pic.png'">
+                    <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='project image/pic.png'">
                     <span class="project-card-category badge badge-accent">${p.category}</span>
                 </div>
                 <div class="project-card-info">
@@ -271,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!slidesContainer) return;
 
         slidesContainer.innerHTML = images.map(img => `
-            <img class="drawer-slide-img" src="${img}" alt="Screenshot" onerror="this.src='pic.png'">
+            <img class="drawer-slide-img" src="${img}" alt="Screenshot" onerror="this.src='project image/pic.png'">
         `).join('');
 
         if (images.length <= 1) {

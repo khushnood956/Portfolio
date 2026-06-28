@@ -34,16 +34,34 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadProjects() {
         // First check localStorage for user changes
         const localData = localStorage.getItem('khushnood_portfolio_projects');
-        
+        let useCache = false;
         if (localData) {
-            state.projects = JSON.parse(localData);
-            console.log('✅ Loaded projects from local cache.');
-        } else if (window.projectsData) {
-            state.projects = window.projectsData;
-            console.log('✅ Loaded projects from window.projectsData.');
-        } else {
-            console.error('❌ No initial project data found.');
-            state.projects = [];
+            try {
+                const parsed = JSON.parse(localData);
+                // Self-healing: if cache doesn't have WHATSAPP SPAM DETECTOR (id: 9) or uses old image paths, discard it
+                const hasWsd = parsed.some(p => p.id === 9);
+                const hasUpdatedPaths = parsed.every(p => !p.image || p.image.startsWith('project image/'));
+                if (hasWsd && hasUpdatedPaths) {
+                    state.projects = parsed;
+                    console.log('✅ Loaded projects from local cache.');
+                    useCache = true;
+                } else {
+                    console.log('⚠️ Local cache is outdated. Clearing local cache.');
+                    localStorage.removeItem('khushnood_portfolio_projects');
+                }
+            } catch (e) {
+                localStorage.removeItem('khushnood_portfolio_projects');
+            }
+        }
+        
+        if (!useCache) {
+            if (window.projectsData) {
+                state.projects = window.projectsData;
+                console.log('✅ Loaded projects from window.projectsData.');
+            } else {
+                console.error('❌ No initial project data found.');
+                state.projects = [];
+            }
         }
 
         renderProjectList();
@@ -158,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tagline = document.getElementById('pTagline').value.trim();
         const category = document.getElementById('pCategory').value;
         const techStack = document.getElementById('pTechStack').value.split(',').map(s => s.trim()).filter(Boolean);
-        const image = document.getElementById('pImage').value.trim() || 'pic.png';
+        const image = document.getElementById('pImage').value.trim() || 'project image/pic.png';
         const images = document.getElementById('pImages').value.split(',').map(s => s.trim()).filter(Boolean);
         const github = document.getElementById('pGithub').value.trim() || '#';
         const featured = document.getElementById('pFeatured').checked;

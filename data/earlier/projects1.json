@@ -5,18 +5,9 @@
     "tagline": "Command-line healthcare administrative application built with strict Java OOP design patterns.",
     "description": "A highly structured command-line application built to simulate clinical administration workflows. It manages medical records, patient intakes, doctor allocations, and departmental organizing using pure Java object-oriented principles.",
     "category": "Backend Core",
-    "techStack": [
-      "Java",
-      "OOP",
-      "Collections Framework",
-      "Data Structures"
-    ],
-    "image": "project image/hp03.png",
-    "images": [
-      "project image/hp03.png",
-      "project image/hp02.png",
-      "project image/hp01.png"
-    ],
+    "techStack": ["Java", "OOP", "Collections Framework", "Data Structures"],
+    "image": "hp03.png",
+    "images": ["hp03.png", "hp02.png", "hp01.png"],
     "github": "https://github.com/khushnood956/Hospital-Management-System",
     "live": "#",
     "featured": true,
@@ -32,18 +23,9 @@
     "tagline": "C++ CLI system for dynamic stock tracking utilizing a custom Singly Linked List implementation.",
     "description": "A performance-focused console application that tracks commercial inventories. It implements a custom linked list structure rather than language templates to maximize control over memory allocation and show underlying data structure mechanics.",
     "category": "Programming Core",
-    "techStack": [
-      "C++",
-      "Data Structures",
-      "Linked Lists",
-      "Memory Management"
-    ],
-    "image": "project image/in01.png",
-    "images": [
-      "project image/in01.png",
-      "project image/in02.png",
-      "project image/in03.png"
-    ],
+    "techStack": ["C++", "Data Structures", "Linked Lists", "Memory Management"],
+    "image": "in01.png",
+    "images": ["in01.png", "in02.png", "in03.png"],
     "github": "https://github.com/khushnood956/Inventory-Management-System",
     "live": "#",
     "featured": true,
@@ -59,19 +41,9 @@
     "tagline": "Mobile expense tracker designed in Kotlin for intuitive personal finance management.",
     "description": "An Android application created using Kotlin to log income, track daily spending, and manage debts. It features a clean material UI designed for mobile responsiveness and lightweight local storage operations.",
     "category": "Mobile Dev",
-    "techStack": [
-      "Kotlin",
-      "Android SDK",
-      "SQLite",
-      "Material Design"
-    ],
-    "image": "project image/kt001.png",
-    "images": [
-      "project image/kt001.png",
-      "project image/kt00.png",
-      "project image/kt02.png",
-      "project image/kt03.png"
-    ],
+    "techStack": ["Kotlin", "Android SDK", "SQLite", "Material Design"],
+    "image": "kt001.png",
+    "images": ["kt001.png", "kt00.png", "kt02.png", "kt03.png"],
     "github": "https://github.com/khushnood956/Money-Manager-App",
     "live": "#",
     "featured": true,
@@ -87,17 +59,9 @@
     "tagline": "Custom file-handling database system in Java showcasing SQL parsing and table storage.",
     "description": "A database engine simulation developed in Java. It parses SQL-like CLI inputs, compiles schema metadata, and maintains structured data files in a custom binary or text layout to support record inserts, updates, and indexing.",
     "category": "Systems Engineering",
-    "techStack": [
-      "Java",
-      "File IO",
-      "Parsing Algorithms",
-      "Database Theory"
-    ],
-    "image": "project image/db01.png",
-    "images": [
-      "project image/db01.png",
-      "project image/db02.png"
-    ],
+    "techStack": ["Java", "File IO", "Parsing Algorithms", "Database Theory"],
+    "image": "db01.png",
+    "images": ["db01.png", "db02.png"],
     "github": "https://github.com/khushnood956/In-Memory-DBMS",
     "live": "#",
     "featured": true,
@@ -113,18 +77,9 @@
     "tagline": "Normalized e-commerce schema architecture engineered using Oracle SQL Developer.",
     "description": "A relational database schema designed from requirements to 3NF. It contains multi-table entities with complex relational joins, foreign keys, cascade constraints, and custom indexing to support order pipelines, user reviews, and payment processing.",
     "category": "Databases",
-    "techStack": [
-      "SQL",
-      "Oracle Database",
-      "Relational Modeling",
-      "ER Diagrams"
-    ],
-    "image": "project image/sql01.jpg",
-    "images": [
-      "project image/sql01.jpg",
-      "project image/SQL02.jpg",
-      "project image/SQL03.jpg"
-    ],
+    "techStack": ["SQL", "Oracle Database", "Relational Modeling", "ER Diagrams"],
+    "image": "sql01.jpg",
+    "images": ["sql01.jpg", "SQL02.jpg", "SQL03.jpg"],
     "github": "https://github.com/khushnood956/Database-Schema-Design",
     "live": "#",
     "featured": true,
@@ -140,16 +95,9 @@
     "tagline": "Terminal-based interactive Sudoku puzzle with a recursive backtracking solver in Python.",
     "description": "An interactive console-based Sudoku game. It includes an algorithmic solver that uses recursive depth-first backtracking to complete boards of any difficulty level in milliseconds.",
     "category": "Programming Core",
-    "techStack": [
-      "Python",
-      "Backtracking Algorithms",
-      "Recursion",
-      "Constraint Satisfaction"
-    ],
-    "image": "project image/sodoku.png",
-    "images": [
-      "project image/sodoku.png"
-    ],
+    "techStack": ["Python", "Backtracking Algorithms", "Recursion", "Constraint Satisfaction"],
+    "image": "sodoku.png",
+    "images": ["sodoku.png"],
     "github": "https://github.com/khushnood956/Sudoku-Solver-Game",
     "live": "#",
     "featured": false,
@@ -165,16 +113,9 @@
     "tagline": "Core Java console utility featuring task management, priorities, and file-based state serialization.",
     "description": "A desktop terminal utility designed in Java to track personal schedules. It implements persistent file storage and lets users add, check off, prioritize, and delete tasks dynamically.",
     "category": "Programming Core",
-    "techStack": [
-      "Java",
-      "Serialization",
-      "File IO",
-      "OOP Design"
-    ],
-    "image": "project image/todolist.png",
-    "images": [
-      "project image/todolist.png"
-    ],
+    "techStack": ["Java", "Serialization", "File IO", "OOP Design"],
+    "image": "todolist.png",
+    "images": ["todolist.png"],
     "github": "https://github.com/khushnood956/Todo-List",
     "live": "#",
     "featured": false,
@@ -190,16 +131,9 @@
     "tagline": "Safe Java simulation of a transactional ledger with balance tracking and transaction history logging.",
     "description": "A Java desktop application that handles simulated financial ledgers. It supports account opening, money deposit/withdrawal limits, balance checks, and logs an immutable ledger of transactions for security auditing.",
     "category": "Backend Core",
-    "techStack": [
-      "Java",
-      "System Security",
-      "OOP",
-      "Transaction Logic"
-    ],
-    "image": "project image/banking.png",
-    "images": [
-      "project image/banking.png"
-    ],
+    "techStack": ["Java", "System Security", "OOP", "Transaction Logic"],
+    "image": "banking.png",
+    "images": ["banking.png"],
     "github": "https://github.com/khushnood956/Banking-Management-System",
     "live": "#",
     "featured": false,
@@ -208,35 +142,5 @@
     "challenges": "Preventing state validation bypasses (such as negative withdrawals or overdrafts) and handling exceptions cleanly in terminal loops.",
     "learnings": "Practiced designing robust exception hierarchies, input validation patterns, and writing immutable data streams for transaction histories.",
     "futureImprovements": "Convert to a Spring Boot service, secure it with JWT Authentication, and add database storage using PostgreSQL."
-  },
-  {
-    "id": 9,
-    "title": "WHATSAPP SPAM DETECTOR",
-    "tagline": "Detect spam and phishing messages in WhatsApp chats with machine learning",
-    "category": "Systems Engineering",
-    "techStack": [
-      "Python",
-      "Streamlit",
-      "scikit-learn",
-      "pandas",
-      "numpy",
-      "matplotlib",
-      "seaborn",
-      "NLTK",
-      "Joblib"
-    ],
-    "image": "project image/wsd01.png",
-    "images": [
-      "project image/wsd02.png"
-    ],
-    "github": "https://github.com/khushnood956/WHATSAPP-SPAM-DETECTOR",
-    "live": "#",
-    "featured": true,
-    "description": "A Streamlit web app that classifies WhatsApp messages as spam or ham using machine learning models and text preprocessing. It includes a chat-style interface, model selection, prediction confidence, and a visual performance dashboard.",
-    "problem": "Helps users identify suspicious or spam-like messages in chat exports before interacting with them",
-    "architecture": "Streamlit frontend for input and display, preprocessing layer for text cleaning, TF-IDF vectorization, and trained classification models loaded through Joblib",
-    "challenges": "Consistent preprocessing between training and prediction, loading model artifacts safely, handling missing model files, and presenting prediction results in a simple chat-style interface",
-    "learnings": "Text normalization, feature extraction with TF-IDF, model inference with scikit-learn, and building an interactive ML web app with Streamlit",
-    "futureImprovements": "Add upload support for WhatsApp chat exports, retrain models on larger datasets, show explainability for predictions, and store prediction history persistently"
   }
 ]
